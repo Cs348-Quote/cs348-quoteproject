@@ -10,10 +10,10 @@ import NavBar from './NavBar.js'
 
 */
 
-function FrontPage() {
+function FrontPage({ Logout }) {
   return (
     <div>
-      <NavBar/>
+      <NavBar Logout={Logout}/>
       <div className="top">
             <body>
               <h1>"Insert Quote Here"</h1>

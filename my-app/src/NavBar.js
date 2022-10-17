@@ -2,14 +2,20 @@
 import logo from './logo.svg';
 import './NavBar.css'
 
-function NavBar() {
+function NavBar({ Logout }) {
+
+  const handleLogout = () => {
+    Logout()
+  }
+
+  // TODO: fix the logout button alignment
     return (
       <div className='topnav'>
         <a href='#'>Quote Map</a>
         <a href='#'>Quote Timeline</a>
         <a href='#'>Quote Feature #3</a>
+        <input type='button' value='Logout' class='right' onClick={handleLogout}/> 
         <SearchBar/>
-        
       </div>
     )
   }
@@ -29,7 +35,7 @@ function NavBar() {
   
   function UserImg() {
     return (
-      <img src={logo} className="User-Profile-Pic" alt="logo" />
+      <img src={logo} className='User-Profile-Pic' alt='logo' />
     )
   }
   
