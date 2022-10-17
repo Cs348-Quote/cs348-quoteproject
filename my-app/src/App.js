@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FrontPage from './FrontPage'
 import LoginForm from './components/LoginForm'
 import './App.css'
 import axios from 'axios'
 
 
-export default function Login() {
+export default function App() {
 
   // just for easier testing - remove later
   const adminUser = { email: 'test@test.com', password: 'test'}
@@ -14,6 +14,17 @@ export default function Login() {
   const [user, setUser] = useState({name: '', email: ''})
   const [error, setError] = useState('');
   
+  //localStorage.clear()
+  // check if user is already logged in
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem('user');
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      console.log(foundUser)
+      setUser(foundUser);
+    }
+  }, []);
+
   // handle login attempt
   const Login = details => {
     // console.log(details)
@@ -26,6 +37,8 @@ export default function Login() {
         name: details.name,
         email: details.email
       })
+      // store the user in localStorage
+      localStorage.setItem('user', JSON.stringify({ name: details.name, email: details.email}))
       admin = true;
     }
 
@@ -43,6 +56,8 @@ export default function Login() {
             name: details.name,
             email: details.email
           })
+          // store the user in localStorage
+          localStorage.setItem('user', JSON.stringify({ name: details.name, email: details.email}))
         } else {
           console.log(`Login failed for: ${details.name}`)
           setError('Bad Login Credentials!')
@@ -58,6 +73,9 @@ export default function Login() {
 
   const Logout = () => {
     setUser({name: '', email: ''})
+    // clear out log in info
+    localStorage.removeItem('user')
+    console.log('Logout')
   }
 
   // only render front page if logged in
