@@ -7,7 +7,9 @@ import axios from 'axios'
 
 export default function Login() {
 
-  
+  // just for easier testing - remove later
+  const adminUser = { email: 'test@test.com', password: 'test'}
+
   const backendUrl = 'http://localhost:5000'
   const [user, setUser] = useState({name: '', email: ''})
   const [error, setError] = useState('');
@@ -16,42 +18,42 @@ export default function Login() {
   const Login = details => {
     // console.log(details)
 
-    // if (details.email === adminUser.email && details.password === adminUser.password) {
-    //   console.log('Admin logged in')
-    //   setUser({
-    //     name: details.name,
-    //     email: details.email
-    //   })
-    //   // Replace with regular user login
-    // } else {
-    //   console.log('Login failed')
-    //   setError('Bad Login Credentials!')
-    // }
+    let admin = false;
 
-    axios.post(`${backendUrl}/login`, {
-      name: details.name,
-      email: details.email,
-      password: details.password
-    })
-    .then(function (response) {
-      console.log(response);
-      if (response.data === 'success') {
-        console.log(`User ${details.name} logged in`)
-        setUser({
-          name: details.name,
-          email: details.email
-        })
-      } else {
+    if (details.email === adminUser.email && details.password === adminUser.password) {
+      console.log('Admin logged in')
+      setUser({
+        name: details.name,
+        email: details.email
+      })
+      admin = true;
+    }
+
+    if (!admin) {
+      axios.post(`${backendUrl}/login`, {
+        name: details.name,
+        email: details.email,
+        password: details.password
+      })
+      .then(function (response) {
+        console.log(response);
+        if (response.data === 'success') {
+          console.log(`User ${details.name} logged in`)
+          setUser({
+            name: details.name,
+            email: details.email
+          })
+        } else {
+          console.log(`Login failed for: ${details.name}`)
+          setError('Bad Login Credentials!')
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
         console.log(`Login failed for: ${details.name}`)
-        setError('Bad Login Credentials!')
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-      console.log(`Login failed for: ${details.name}`)
-      setError(`Login Failed: ${error}`)
-    });
-
+        setError(`Login Failed: ${error}`)
+      });
+    }
   }
 
   const Logout = () => {
@@ -71,4 +73,3 @@ export default function Login() {
     </div>
   )
 }
-
