@@ -1,13 +1,19 @@
 import React, {useState} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import './LoginForm.css'
 
 function LoginForm({Login, error}) {
   const [details, setDetails] = useState({name: '', email: '', password: ''});
+  const navigate = useNavigate()
+
 
   const handleLogin = e => {
     e.preventDefault();
 
-    Login(details)
+    const success = Login(details)
+    
+    // redirect successful login to home
+    if (success) navigate('/')
   }
 
   return (
@@ -31,10 +37,10 @@ function LoginForm({Login, error}) {
             onChange={e => setDetails({...details, password: e.target.value})} value={details.password}/>
         </div>
         <input type='submit' value='Next'/>
+        <Link to='/signup'> Create an account. </Link>
       </div>
     </form>
   )
 }
-//TODO: add a signup page - new js file with link
 
 export default LoginForm
