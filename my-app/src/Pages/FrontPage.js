@@ -13,12 +13,9 @@ import { Navigate } from 'react-router-dom'
 
 function FrontPage({ Logout, Authorized }) {
 
-  // check if user has logged in
-  if (!Authorized) return <Navigate to='/login'/>
-
   return (
     <div>
-      <NavBar Logout={Logout}/>
+      <NavBar Logout={Logout} Authorized={Authorized}/>
       <div className="top">
             <body>
               <h1>"Insert Quote Here"</h1>

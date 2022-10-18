@@ -1,26 +1,12 @@
-.dropdown-option {
-    display: none;
-    position: absolute;
-    width: 100%;
-    overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  }
-  
-  .dropdown:hover .dropdown-option {
-    display: block;
-  
-  }
-  
-  .dropdown {
-    display: inline-block;
-    position: relative;
-  }
+
 
   .SearchBar {
     text-align: center;
     padding: 14px 16px;
-    float: right;
+    display: flex;
+
   }
+  
   
 .User-Profile-Pic {
 border-radius: 50%;
@@ -30,31 +16,48 @@ object-fit: scale-down;
 .topnav {
 overflow: hidden;
 background-color: #333;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+align-items: center;
 }
   
-.topnav a, .topnav p {
-float: left;
-display: block;
-color: #f2f2f2;
-text-align: center;
-padding: 14px 16px;
-text-decoration: none;
+.left a {
+  float: left;
 }
 
-.topnav {
-    overflow: hidden;
-    background-color: #333;
-  }
-  
+
+
+.right {
+  display: flex;
+  float: right;
+}
+
+.center element {
+  float: center;
+}
+
+
+.left a, .topnav button {
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  border: none;
+  background-color: #333;
+}
 
   
-.topnav a:hover, .topnav p:hover {
+.topnav a:hover, .topnav button:hover{
     background-color: #ddd;
     color: black;
 }
   
-  
-.topnav a:hover, .topnav p:hover {
-    background-color: #ddd;
-    color: black;
+.topnav a {
+  text-decoration: none;
+}  
+
+.topnav h2 {
+  color: #ddd;
+  text-align: center;
 }
