@@ -42,8 +42,8 @@ export default function App() {
       })
       // store the user in localStorage
       localStorage.setItem('user', JSON.stringify({ name: details.name, email: details.email}))
-      admin = true;
-      return true;
+      admin = true
+      return true
     }
 
     if (!admin) {
@@ -64,7 +64,7 @@ export default function App() {
           // store the user in localStorage
           localStorage.setItem('user', JSON.stringify({ name: details.name, email: details.email}))
           
-          return true;
+          return true
         } else {
           console.log(`Login failed for: ${details.name}`)
           setError('Bad Login Credentials!')
