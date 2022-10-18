@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from database import check_login, create_user, random_quote
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 
@@ -10,7 +12,7 @@ def hello_world():
 
 #checks if user login matches that in DB
 @app.route('/login', methods = ["POST"]) #route depends on Jon
-def get_user_login():
+def get_user_login(): 
     input_json = request.get_json(force=True)
     user_info = {'email':input_json['email'],
                     'password':input_json['password']}
