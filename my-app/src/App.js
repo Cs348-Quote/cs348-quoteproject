@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import FrontPage from './FrontPage'
-import LoginForm from './components/LoginForm'
+import FrontPage from './Pages/FrontPage'
+import LoginForm from './Pages/LoginForm'
+import SignupForm from './Pages/SignupForm'
+import ErrorPage from './Pages/ErrorPage'
 import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import axios from 'axios'
 
 
@@ -40,6 +43,7 @@ export default function App() {
       // store the user in localStorage
       localStorage.setItem('user', JSON.stringify({ name: details.name, email: details.email}))
       admin = true;
+      return true;
     }
 
     if (!admin) {
@@ -50,7 +54,8 @@ export default function App() {
       })
       .then(function (response) {
         console.log(response);
-        if (response.data === 'success') {
+        if (response.data === 1) {
+          // Successful login
           console.log(`User ${details.name} logged in`)
           setUser({
             name: details.name,
@@ -58,6 +63,8 @@ export default function App() {
           })
           // store the user in localStorage
           localStorage.setItem('user', JSON.stringify({ name: details.name, email: details.email}))
+          
+          return true;
         } else {
           console.log(`Login failed for: ${details.name}`)
           setError('Bad Login Credentials!')
@@ -80,14 +87,24 @@ export default function App() {
 
   // only render front page if logged in
   return (
-    <div className='App'>
-      {(user.email !== '') ? (
-        <div className='FrontPage'>
-          <FrontPage Logout={Logout}/>
-        </div>
-      ) : (
-        <LoginForm Login={Login} error={error} />
-      )}
-    </div>
+    // <div className='App'>
+    //   {(user.email !== '') ? (
+    //     <div className='FrontPage'>
+    //       <FrontPage Logout={Logout}/>
+    //     </div>
+    //   ) : (
+    //     <LoginForm Login={Login} error={error} />
+    //   )}
+    // </div>
+
+    // Pages should be protected by login
+    <Router>
+      <Routes>
+        <Route path='/' element={<FrontPage Logout={Logout} Authorized={(localStorage.getItem('user')) ? true : false}/>}></Route>
+        <Route path='/login' element={<LoginForm Login={Login} error={error}/>}></Route>
+        <Route path='/signup' element={<SignupForm />}></Route>
+        <Route path='*' element={<ErrorPage />}></Route>
+      </Routes>
+    </Router>
   )
 }

@@ -1,5 +1,6 @@
 import './FrontPage.css'
-import NavBar from './NavBar.js'
+import NavBar from '../components/NavBar.js'
+import { Navigate } from 'react-router-dom'
 
 /*
 
@@ -10,7 +11,11 @@ import NavBar from './NavBar.js'
 
 */
 
-function FrontPage({ Logout }) {
+function FrontPage({ Logout, Authorized }) {
+
+  // check if user has logged in
+  if (!Authorized) return <Navigate to='/login'/>
+
   return (
     <div>
       <NavBar Logout={Logout}/>
