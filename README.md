@@ -12,7 +12,8 @@ To load the database into postgresql, simply:
 4. then refresh the database and all the tables should now be present
 5. you can then the query tool again to do sql querys
 6. Create a virtual environment using the requirements.txt. This can be done by "conda create --name <env> --file requirements.txt"
-7. Go to the directory ./cs348-quoteproject in cmd and run "flask run" to start the flask backend. Then proceed to frontend setup.
+7. Activate your virtual environment
+8. Go to the directory ./cs348-quoteproject in cmd and run "flask run" to start the flask backend. Then proceed to frontend setup.
 
 # Frontend Setup
 
