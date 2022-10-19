@@ -1,10 +1,13 @@
-CREATE TABLE IF NOT EXISTS "locations" (
-"name" TEXT,
-"location" TEXT,
+CREATE TABLE IF NOT EXISTS "authors" (
+"name" TEXT NOT NULL PRIMARY KEY,
+"location" TEXT NOT NULL,
 "jobs" TEXT[]
+-- constraint fk_authors_locations
+--     foreign key (location) 
+--     REFERENCES locations (name)
 );
 
-INSERT INTO locations VALUES
+INSERT INTO authors VALUES
 ('Lawrence Durrell','Jalandhar','{"screenwriter","writer","poet","playwright","autobiographer"}'),
 ('Gigi Hadid','Los Angeles','{"supermodel"}'),
 ('Richard Paul Evans','Salt Lake City','{"writer","children''s writer","novelist"}'),

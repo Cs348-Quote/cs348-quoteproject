@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS "locations" (
+"name" TEXT NOT NULL PRIMARY KEY,
+"country" TEXT NOT NULL,
+"coordinate" TEXT NOT NULL
+);
