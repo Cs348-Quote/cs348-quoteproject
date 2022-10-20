@@ -26,3 +26,30 @@ Install Dependencies:
 Run in development mode:
 
 `npm start`
+
+This should take you to the front page.
+## Logging into Quote Explorer
+
+You can navigate to the login page by clicking on the login button at the top right.
+
+![login button circled in red](read-me-images/login_button_circled_red.png)
+
+You can use the following credentials to login:
+
+```
+email: test@test.com
+password: test
+```
+Or you can enter your own credentials by first creating an account.
+
+### Creating an account
+
+From the login page, click on "Create an account". 
+
+![create an account](read-me-images/create_an_account.png)
+
+Enter your information and click Next. 
+
+![signup](read-me-images/signup_form.png)
+
+You can now login using with your new account.
