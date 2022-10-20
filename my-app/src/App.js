@@ -5,7 +5,7 @@ import SignupForm from './Pages/SignupForm'
 import ErrorPage from './Pages/ErrorPage'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import axios from 'axios'
+import axios, { AxiosHeaders } from 'axios'
 
 
 export default function App() {
@@ -85,6 +85,36 @@ export default function App() {
     console.log('Logout')
   }
 
+  const SignUp = details => {
+    axios.post(`${backendUrl}/signup`, {
+      name: details.name,
+      email: details.email,
+      password: details.password
+    }).then(function (response) {
+      console.log(response);
+      if (response.data === 1) {
+        // Successful login
+        console.log(`User ${details.name} signed up successfully`)
+        setUser({
+          name: details.name,
+          email: details.email
+        })
+        // store the user in localStorage
+        localStorage.setItem('user', JSON.stringify({ name: details.name, email: details.email}))
+        
+        return true
+      } else {
+        console.log(`Signup failed for: ${details.name}`)
+        setError('Email is not unique!')
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+      console.log(`Signup failed for: ${details.name}`)
+      setError(`Signup Failed: ${error}`)
+    });
+  }
+
   // only render front page if logged in
   return (
     // <div className='App'>
@@ -102,7 +132,7 @@ export default function App() {
       <Routes>
         <Route path='/' element={<FrontPage Logout={Logout} Authorized={(localStorage.getItem('user')) ? true : false}/>}></Route>
         <Route path='/login' element={<LoginForm Login={Login} error={error}/>}></Route>
-        <Route path='/signup' element={<SignupForm />}></Route>
+        <Route path='/signup' element={<SignupForm SignUp={SignUp} />}></Route>
         <Route path='*' element={<ErrorPage />}></Route>
       </Routes>
     </Router>
