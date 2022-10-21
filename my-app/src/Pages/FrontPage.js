@@ -18,7 +18,7 @@ function FrontPage({ Logout, Authorized, QuoteOfDay }) {
     quote: "Insert Quote Here",
     author: "Insert Author Here"
   })
-  useEffect(QuoteOfDay, [])
+  useEffect(QuoteOfDay(setOfTheDay), [])
   return (
     <div>
       <NavBar Logout={Logout} Authorized={Authorized}/>
