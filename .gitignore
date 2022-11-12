@@ -130,3 +130,4 @@ dmypy.json
 
 #quote of the day JSON file
 quote_of_day.json
+.vscode

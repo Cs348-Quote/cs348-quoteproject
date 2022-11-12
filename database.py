@@ -3,12 +3,22 @@ import os
 import json
 from os.path import exists
 from datetime import datetime
+from dotenv import load_dotenv
+load_dotenv()
+
+DB_NAME = os.environ.get("DB_NAME")
+DB_USER = os.environ.get("DB_USER")
+DB_PASS = os.environ.get("DB_PASS")
+CONNECT_STRING = f"dbname={DB_NAME} user={DB_USER} password={DB_PASS}"
+
+# DEBUG
+# print(CONNECT_STRING)
 
 def connect():
     """Connect to the PostgreSQL database server"""
     conn = None
     try:
-        conn = psycopg2.connect("dbname=quotes user=postgres password=x")
+        conn = psycopg2.connect(CONNECT_STRING)
         print("Successfully connected to db")
         # create a cursor
         cur = conn.cursor()
@@ -28,7 +38,7 @@ def connect():
             print('Database connection closed.')
 
 def check_login(email, password):
-    conn = psycopg2.connect("dbname=quotes user=postgres password=x")
+    conn = psycopg2.connect(CONNECT_STRING)
     cur = conn.cursor()
     cur.execute("SELECT email, password FROM user_info WHERE email = '" + str(email) + "' and password = '" + str(password)+"'")
     if (cur.rowcount > 0):
@@ -41,7 +51,7 @@ def check_login(email, password):
         return "0"
 
 def create_user(name, email, password):
-    conn = psycopg2.connect("dbname=quotes user=postgres password=x")
+    conn = psycopg2.connect(CONNECT_STRING)
     cur = conn.cursor()
     
     #check if user email is unique
@@ -60,7 +70,7 @@ def create_user(name, email, password):
     return "1"
     
 def random_quote():
-    conn = psycopg2.connect("dbname=quotes user=postgres password=x")
+    conn = psycopg2.connect(CONNECT_STRING)
     cur = conn.cursor()
     
 
