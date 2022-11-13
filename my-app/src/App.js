@@ -115,6 +115,11 @@ export default function App() {
     });
   }
 
+  const QuoteOfDay = (setOfTheDay) => {
+    axios.get(`${backendUrl}/random_quote`).then((response) => {
+      setOfTheDay(response.data)
+    })
+  }
   // only render front page if logged in
   return (
     // <div className='App'>
@@ -130,7 +135,7 @@ export default function App() {
     // Pages should be protected by login
     <Router>
       <Routes>
-        <Route path='/' element={<FrontPage Logout={Logout} Authorized={(localStorage.getItem('user')) ? true : false}/>}></Route>
+        <Route path='/' element={<FrontPage Logout={Logout} Authorized={(localStorage.getItem('user')) ? true : false} QuoteOfDay={QuoteOfDay}/>}></Route>
         <Route path='/login' element={<LoginForm Login={Login} error={error}/>}></Route>
         <Route path='/signup' element={<SignupForm SignUp={SignUp} />}></Route>
         <Route path='*' element={<ErrorPage />}></Route>
