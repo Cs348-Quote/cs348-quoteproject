@@ -6,6 +6,7 @@ import ErrorPage from './Pages/ErrorPage'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import axios, { AxiosHeaders } from 'axios'
+import QuoteCreation from './Pages/QuoteCreation'
 
 
 export default function App() {
@@ -113,6 +114,10 @@ export default function App() {
       console.log(`Signup failed for: ${details.name}`)
       setError(`Signup Failed: ${error}`)
     });
+
+    const CreateQuote = quoteDetails => {
+      
+    }
   }
 
   // only render front page if logged in
@@ -134,6 +139,7 @@ export default function App() {
         <Route path='/login' element={<LoginForm Login={Login} error={error}/>}></Route>
         <Route path='/signup' element={<SignupForm SignUp={SignUp} />}></Route>
         <Route path='*' element={<ErrorPage />}></Route>
+        <Route path='/create' element={<QuoteCreation/>}></Route>
       </Routes>
     </Router>
   )

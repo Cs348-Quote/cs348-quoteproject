@@ -24,7 +24,7 @@ function NavBar({ Logout, Authorized }) {
         <div className='left'>
           <Link to='/' > Quote Map </Link>
           <Link to='/'>Quote Timeline</Link>
-          <Link to='/'>Quote Feature #3</Link>
+          <Link to='/create'>Create a Quote</Link>
         </div>
         <div className='center'><Link to='/'><h2>Quote Explorer</h2></Link></div>
         <div className='right'>
