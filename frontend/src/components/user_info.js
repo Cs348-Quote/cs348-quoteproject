@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useState } from "react"
 
 
 const useUserDetails = () => {
-    const [details, setDetails] = useState({name: '', email: '', password: ''});
+    const [details, setDetails] = useState({name: '', email: '', password: ''})
     return [details, setDetails]
 }
 

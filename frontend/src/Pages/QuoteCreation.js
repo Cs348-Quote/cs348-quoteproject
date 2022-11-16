@@ -1,5 +1,5 @@
-import NavBar from "../components/NavBar";
-import { FormGroup } from "../components/user_info";
+import NavBar from "../components/NavBar"
+import { FormGroup } from "../components/user_info"
 
 function QuoteCreation({CreateQuote}) {
     return (

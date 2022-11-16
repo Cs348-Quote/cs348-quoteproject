@@ -16,24 +16,26 @@ export default function App() {
 
   const backendUrl = 'http://localhost:5000'
   const [user, setUser] = useState({name: '', email: ''})
-  const [error, setError] = useState('');
+  const [error, setError] = useState('')
   
   //localStorage.clear()
   // check if user is already logged in
   useEffect(() => {
-    const loggedInUser = localStorage.getItem('user');
+    const loggedInUser = localStorage.getItem('user')
     if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
+      const foundUser = JSON.parse(loggedInUser)
       console.log(foundUser)
-      setUser(foundUser);
+      setUser(foundUser)
     }
-  }, []);
+  }, [])
 
   // handle login attempt
-  const Login = details => {
+  const Login = async (details) => {
     // console.log(details)
 
-    let admin = false;
+    let admin = false
+    let success = false
+    let done = false
 
     if (details.email === adminUser.email && details.password === adminUser.password) {
       console.log('Admin logged in')
@@ -44,38 +46,42 @@ export default function App() {
       // store the user in localStorage
       localStorage.setItem('user', JSON.stringify({ name: details.name, email: details.email}))
       admin = true
+      success = true
       return true
     }
 
     if (!admin) {
-      axios.post(`${backendUrl}/login`, {
+      done = await axios.post(`${backendUrl}/login`, {
         name: details.name,
         email: details.email,
         password: details.password
       })
       .then(function (response) {
-        console.log(response);
+        console.log(response)
         if (response.data === 1) {
+          success = true
           // Successful login
-          console.log(`User ${details.name} logged in`)
+          console.log(`User ${details.email} logged in`)
           setUser({
             name: details.name,
             email: details.email
           })
           // store the user in localStorage
-          localStorage.setItem('user', JSON.stringify({ name: details.name, email: details.email}))
-          
-          return true
+          localStorage.setItem('user', JSON.stringify({ 
+            name: details.name, 
+            email: details.email
+          }))
         } else {
-          console.log(`Login failed for: ${details.name}`)
+          console.log(`Login failed for: ${details.email}`)
           setError('Bad Login Credentials!')
         }
       })
       .catch(function (error) {
-        console.log(error);
-        console.log(`Login failed for: ${details.name}`)
+        console.log(error)
+        console.log(`Login failed for: ${details.email}`)
         setError(`Login Failed: ${error}`)
-      });
+      })
+      return success
     }
   }
 
@@ -92,10 +98,10 @@ export default function App() {
       email: details.email,
       password: details.password
     }).then(function (response) {
-      console.log(response);
+      console.log(response)
       if (response.data === 1) {
         // Successful login
-        console.log(`User ${details.name} signed up successfully`)
+        console.log(`User ${details.email} signed up successfully`)
         setUser({
           name: details.name,
           email: details.email
@@ -105,15 +111,15 @@ export default function App() {
         
         return true
       } else {
-        console.log(`Signup failed for: ${details.name}`)
+        console.log(`Signup failed for: ${details.email}`)
         setError('Email is not unique!')
       }
     })
     .catch(function (error) {
-      console.log(error);
-      console.log(`Signup failed for: ${details.name}`)
+      console.log(error)
+      console.log(`Signup failed for: ${details.email}`)
       setError(`Signup Failed: ${error}`)
-    });
+    })
 
     const CreateQuote = quoteDetails => {
       
@@ -130,7 +136,7 @@ export default function App() {
     // Pages should be protected by login
     <Router>
       <Routes>
-        <Route path='/' element={<FrontPage Logout={Logout} Authorized={(localStorage.getItem('user')) ? true : false} QuoteOfDay={QuoteOfDay}/>}></Route>
+        <Route path='/' element={<FrontPage Logout={Logout} QuoteOfDay={QuoteOfDay}/>}></Route>
         <Route path='/login' element={<LoginForm Login={Login} error={error}/>}></Route>
         <Route path='/signup' element={<SignupForm SignUp={SignUp} />}></Route>
         <Route path='*' element={<ErrorPage />}></Route>

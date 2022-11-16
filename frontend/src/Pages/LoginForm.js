@@ -1,25 +1,25 @@
-import React, {useContext, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import useUserDetails, { FormGroup } from '../components/user_info';
+import useUserDetails, { FormGroup } from '../components/user_info'
 import './LoginForm.css'
 import '../components/user_info.css'
 
 
-
-
 function LoginForm({Login, error}) {
-  const [details, setDetails] = useUserDetails();
+  const [details, setDetails] = useUserDetails()
   const navigate = useNavigate()
 
-
-  const handleLogin = e => {
-    e.preventDefault();
-
-    const success = Login(details)
-    
-    // redirect successful login to home
-    if (success) navigate('/')
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    try {
+      const success = await Login(details)
+      if (success) navigate('/')
+    } catch (e) {
+      console.log(e)
+    }
   }
+
+
   const loginInfo = ['name', 'email', 'password'].map(
     (type)=> <FormGroup userDetailType={type} details={details} setDetails={setDetails}/>)
 

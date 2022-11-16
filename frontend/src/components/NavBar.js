@@ -1,9 +1,9 @@
 // Temporary. Used for profile pic
-import logo from '../logo.svg';
+import logo from '../logo.svg'
 import './NavBar.css'
 import { Link, useNavigate } from 'react-router-dom'
 
-function NavBar({ Logout, Authorized }) {
+function NavBar({ Logout }) {
 
   const navigate = useNavigate()
 
@@ -15,10 +15,13 @@ function NavBar({ Logout, Authorized }) {
 
   const logoutButton = <button onClick={handleLogout}>Logout</button>
   const loginButton = <button onClick={() => navigate('/login')}>Login</button>
-
+  
+  // remove authorized from props and calculate locally for component
+  // bug where redirect to front page without setting authorized
+  const Authorized = (localStorage.getItem('user')) ? true : false
+  console.log(Authorized)
   const loginOrLogout = Authorized ? logoutButton : loginButton 
 
-  // TODO: fix the logout button alignment
     return (
       <div className='topnav'>
         <div className='left'>
@@ -64,4 +67,4 @@ function NavBar({ Logout, Authorized }) {
     )
   }
 
-  export default NavBar;
+  export default NavBar

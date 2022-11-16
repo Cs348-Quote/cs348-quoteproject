@@ -10,7 +10,7 @@ function SignupForm({SignUp}) {
     (type)=> <FormGroup userDetailType={type} key={type} details={details} setDetails={setDetails}/>)
 
     const handleSignUp = e => {
-      e.preventDefault();
+      e.preventDefault()
   
       const success = SignUp(details)
       
