@@ -101,6 +101,7 @@ def random_quote():
         "date" : curr_date
     }
 
+    # intentional write here?
     f = open('quote_of_day.json', 'w')
     json.dump(random_quote, f, indent = 6)
     f.close()

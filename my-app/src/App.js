@@ -5,7 +5,7 @@ import SignupForm from './Pages/SignupForm'
 import ErrorPage from './Pages/ErrorPage'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import axios, { AxiosHeaders } from 'axios'
+import axios from 'axios'
 import QuoteCreation from './Pages/QuoteCreation'
 
 
@@ -120,23 +120,13 @@ export default function App() {
     }
   }
 
-  const QuoteOfDay = (setOfTheDay) => {
+  const QuoteOfDay = setOfTheDay => {
     axios.get(`${backendUrl}/random_quote`).then((response) => {
-      setOfTheDay(response.data)
+      setOfTheDay({author: response.data.author, quote: response.data.quote})
     })
   }
-  // only render front page if logged in
-  return (
-    // <div className='App'>
-    //   {(user.email !== '') ? (
-    //     <div className='FrontPage'>
-    //       <FrontPage Logout={Logout}/>
-    //     </div>
-    //   ) : (
-    //     <LoginForm Login={Login} error={error} />
-    //   )}
-    // </div>
 
+  return (
     // Pages should be protected by login
     <Router>
       <Routes>

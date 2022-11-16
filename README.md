@@ -1,16 +1,20 @@
 # cs348-quoteproject
 The platform we are using to host our database is postgresql
 
+## Database Setup
 To load the database into postgresql, simply: 
-1. install the latest version of postgres and open pgadmin 4
-2. inside of pgadmin4, create a new database 
-3. using the query tool, load the database.sql files inside this repo and run it
-  - insert the user_infotable.sql file first, this is an empty table but is used as a placeholder
-  - insert the locationstable.sql file second, this is an empty table but is used as a placeholder
-  - insert the authorstable.sql file third, the foreign key constraints are commented out as the location table is not done yet
-  - insert the quotestable.sql file last, this may take several minutes
-4. then refresh the database and all the tables should now be present
-5. you can then the query tool again to do sql querys
+  1. install the latest version of postgres and open pgadmin 4
+  2. inside of pgadmin4, create a new database 
+  3. using the query tool, load the database.sql files inside ~/backend/table-queries and run it
+    - insert the user_infotable.sql file first, this is an empty table but is used as a placeholder
+    - insert the locationstable.sql file second, this is an empty table but is used as a placeholder
+    - insert the authorstable.sql file third, the foreign key constraints are commented out as the location table is not done yet
+    - insert the quotestable.sql file last, this may take several minutes
+  4. then refresh the database and all the tables should now be present
+  5. you can then the query tool again to do sql querys
+
+## Virtual Environment Setup
+Make sure you are in the backend directory:
 
 To set up virtual environment on windows:
   6. Create a virtual environment using the requirements.txt. This can be done by "conda create --name <env> --file requirements.txt"
@@ -27,7 +31,7 @@ To set up virtual env on mac:
   Start backend server:
     9. `flask run`
 
-# Frontend Setup
+## Frontend Setup
 
 `cd my-app`
 
