@@ -1,8 +1,8 @@
 import './FrontPage.css'
 import NavBar from '../components/NavBar.js'
 import { Navigate } from 'react-router-dom'
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 /*
 
@@ -13,12 +13,15 @@ import axios from 'axios';
 
 */
 
+
 function FrontPage({ Logout, Authorized, QuoteOfDay }) {
   const [ofTheDay, setOfTheDay] = useState({
     quote: "Insert Quote Here",
     author: "Insert Author Here"
   })
-  useEffect(QuoteOfDay(setOfTheDay), [])
+
+  useEffect(() => QuoteOfDay(setOfTheDay), [])
+
   return (
     <div>
       <NavBar Logout={Logout} Authorized={Authorized}/>
