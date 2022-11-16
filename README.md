@@ -33,7 +33,7 @@ To set up virtual env on mac:
 
 ## Frontend Setup
 
-`cd my-app`
+`cd frontend`
 
 Install Dependencies:
 
