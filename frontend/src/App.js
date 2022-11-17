@@ -138,11 +138,11 @@ export default function App() {
           console.log(`Quote Creation Failed`)
           setError(`Failed to Create Quote`)
         }
-      }). catch(function (error)) {
+      }). catch(function (error) {
         console.log(error)
         console.log(`Quote Creation failed for: ${user.name}`)
         setError(`Quote Creation Failed: ${error}`)
-      }
+      })
     }
   }
 
