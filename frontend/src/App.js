@@ -7,6 +7,7 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import axios from 'axios'
 import QuoteCreation from './Pages/QuoteCreation'
+import Quote from './Pages/Quote'
 
 
 export default function App() {
@@ -133,7 +134,7 @@ export default function App() {
           // Redirect to Quote. 
           // Needs the response to contain the id of the created quote
           // Intented to redirect to /quotes/${quoteID}
-          response.data.id
+          const id = response.data.id
         } else {
           console.log(`Quote Creation Failed`)
           setError(`Failed to Create Quote`)
@@ -152,6 +153,12 @@ export default function App() {
     })
   }
 
+  const GetQuote = (id, setQuote) => {
+    axios.get(`${backendUrl}/quote/${id}`).then((response) => {
+      setQuote({author: response.data.author, content: response.data.quote})
+    })
+  }
+
   return (
     // Pages should be protected by login
     <Router>
@@ -161,6 +168,7 @@ export default function App() {
         <Route path='/signup' element={<SignupForm SignUp={SignUp} />}></Route>
         <Route path='*' element={<ErrorPage />}></Route>
         <Route path='/create' element={<QuoteCreation/>}></Route>
+        <Route path="/quotes/:id" element={<Quote GetQuote={GetQuote}/>}></Route>
       </Routes>
     </Router>
   )
