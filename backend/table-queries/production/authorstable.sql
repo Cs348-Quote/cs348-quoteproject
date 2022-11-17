@@ -4613,4 +4613,7 @@ INSERT INTO authors VALUES
 ('George Edward Woodberry','United States of America','{"writer","poet","biographer","journalist","literary critic"}','-98.5795' , '39.828175'),
 ('Miriam Toews','Steinbach','{"writer"}','-96.6839' , '49.5258'),
 ('Arne Jacobsen','Aarhus','{"architect","designer","furniture designer","archer"}','10.209722222' , '56.156388888'),
-('Amelia Atwater-Rhodes','Silver Springs','{"writer","writer","children''s writer","children''s writer","novelist","novelist"}','-119.221' , '39.3706')
+('Amelia Atwater-Rhodes','Silver Springs','{"writer","writer","children''s writer","children''s writer","novelist","novelist"}','-119.221' , '39.3706'),
+('admin',null,null,null ,null),
+('test',null,null,null ,null)
+
