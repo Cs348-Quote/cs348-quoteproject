@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS "authors" (
 INSERT INTO authors VALUES
 ('Marcus Tullius Cicero','Rome','{"writer","lawyer","poet","politician","jurist","Ancient Roman priest","philosopher","orator","political theorist","Ancient Roman politician","Ancient Roman military personnel","Ancient Roman politician","Ancient Roman military personnel"}','12.482777777' , '41.893055555'),
 ('C. S. Lewis','Belfast','{"writer","theologian","university teacher"}','-5.93' , '54.596388888'),
+('C.S. Lewis','Belfast','{"writer","theologian","university teacher"}','-5.93' , '54.596388888'),
 ('Albert Camus','Dréan','{"screenwriter","writer","poet","professor","playwright","association football player","journalist","philosopher","novelist","essayist","French Resistance fighter"}','7.75' , '36.68333'),
 ('Eleanor Roosevelt','Manhattan','{"photographer","historian","memoirist","philanthropist","writer","politician","diplomat","human rights activist","journalist","peace activist","autobiographer","women''s rights activist"}','-73.994166666' , '40.728333333'),
 ('Mark Twain','Florida','{"writer","teacher","author","journalist","travel writer","aphorist","children''s writer","opinion journalist","novelist","prosaist","humorist","autobiographer","science fiction writer"}','-91.79025' , '39.491694444'),
