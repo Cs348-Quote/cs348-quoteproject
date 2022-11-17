@@ -72,7 +72,6 @@ def create_user(name, email, password):
 def random_quote():
     conn = psycopg2.connect(CONNECT_STRING)
     cur = conn.cursor()
-    
 
     curr_date = datetime.today().strftime('%Y-%m-%d')
     #check if quote_of_day_exists
@@ -108,8 +107,21 @@ def random_quote():
 
     return random_quote
 
+def add_quote(name, quote, category):
+    conn = psycopg2.connect(CONNECT_STRING)
+    cur = conn.cursor()
 
-        
+    #find max qid
+    cur.execute("SELECT MAX(qid) FROM quotes")
+    new_qid = cur.fetchone()[0] + 1
+    print("THE MAX IS: " + str(new_qid) + "\n")
+    
+    #insert new quote into quotes
+    SQL = "INSERT INTO quotes (qid, quote, author, category) VALUES (%s, %s, %s, %s)"
+    data = (new_qid, quote, name, category)
+    cur.execute(SQL, data)
+    print("Quote added")
+    return "1"
 
 
 

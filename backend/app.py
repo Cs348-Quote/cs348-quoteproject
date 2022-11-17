@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from database import check_login, create_user, random_quote
+from database import check_login, create_user, random_quote, add_quote
 
 app = Flask(__name__)
 CORS(app)
@@ -31,3 +31,11 @@ def new_user():
 @app.route('/random_quote', methods = ["GET"]) #route depends on Jon
 def make_quote():
     return random_quote()
+
+@app.route('/create', methods = ["POST"])
+def create_new_quote():
+    input_json = request.get_json(force=True)
+    quote_info = {'name':input_json['name'],
+                'quote':input_json['quote'],
+                'category':input_json['category']}
+    return add_quote(quote_info["name"], quote_info["quote"], quote_info["category"])
