@@ -16,20 +16,20 @@ To load the database into postgresql, simply:
 ## Virtual Environment Setup
 Make sure you are in the backend directory:
 
-To set up virtual environment on windows:
-  6. Create a virtual environment using the requirements.txt. This can be done by "conda create --name <env> --file requirements.txt"
-  7. Activate your virtual environment
-  8. Go to the directory ./cs348-quoteproject in cmd and run "flask run" to start the flask backend. Then proceed to frontend setup.
+To set up virtual environment on windows:  
+  6. Create a virtual environment using the requirements.txt. This can be done by "conda create --name <env> --file requirements.txt".  
+  7. Activate your virtual environment.  
+  8. Go to the directory ./cs348-quoteproject in cmd and run "flask run" to start the flask backend. Then proceed to frontend setup.   
 
-To set up virtual env on mac:
-  Create virtual env:
-    6. `python -m venv venv`
-  Start virtual env:
-    7. source venv/bin/activate
-  Install dependencies
-    8. `pip install -r requirements.txt`
-  Start backend server:
-    9. `flask run`
+To set up virtual env on mac:  
+  Create virtual env:  
+    6. `python -m venv venv`  
+  Start virtual env:  
+    7. source venv/bin/activate  
+  Install dependencies  
+    8. `pip install -r requirements.txt`  
+  Start backend server:  
+    9. `flask run`  
 
 ## Frontend Setup
 
