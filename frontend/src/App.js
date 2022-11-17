@@ -7,6 +7,7 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import axios from 'axios'
 import QuoteCreation from './Pages/QuoteCreation'
+import Quote from './Pages/Quote'
 
 
 export default function App() {
@@ -122,13 +123,39 @@ export default function App() {
     })
 
     const CreateQuote = quoteDetails => {
-      
+      axios.post(`${backendUrl}/create`, {
+        name: user.name,
+        quote: quoteDetails.quote,
+        category: quoteDetails.category
+      }).then(function (response) {
+        if (response.data === 1) {
+          // Successful Quote Creation
+          console.log(`User ${quoteDetails.username} created a quote`)
+          // Redirect to Quote. 
+          // Needs the response to contain the id of the created quote
+          // Intented to redirect to /quotes/${quoteID}
+          const id = response.data.id
+        } else {
+          console.log(`Quote Creation Failed`)
+          setError(`Failed to Create Quote`)
+        }
+      }). catch(function (error) {
+        console.log(error)
+        console.log(`Quote Creation failed for: ${user.name}`)
+        setError(`Quote Creation Failed: ${error}`)
+      })
     }
   }
 
   const QuoteOfDay = setOfTheDay => {
     axios.get(`${backendUrl}/random_quote`).then((response) => {
       setOfTheDay({author: response.data.author, quote: response.data.quote})
+    })
+  }
+
+  const GetQuote = (id, setQuote) => {
+    axios.get(`${backendUrl}/quote/${id}`).then((response) => {
+      setQuote({author: response.data.author, content: response.data.quote})
     })
   }
 
@@ -141,6 +168,7 @@ export default function App() {
         <Route path='/signup' element={<SignupForm SignUp={SignUp} />}></Route>
         <Route path='*' element={<ErrorPage />}></Route>
         <Route path='/create' element={<QuoteCreation/>}></Route>
+        <Route path="/quotes/:id" element={<Quote GetQuote={GetQuote}/>}></Route>
       </Routes>
     </Router>
   )
