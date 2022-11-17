@@ -5,11 +5,10 @@ The platform we are using to host our database is postgresql
 To load the database into postgresql, simply: 
   1. install the latest version of postgres and open pgadmin 4
   2. inside of pgadmin4, create a new database 
-  3. using the query tool, load the database.sql files inside ~/backend/table-queries and run it
-    - insert the user_infotable.sql file first, this is an empty table but is used as a placeholder
-    - insert the locationstable.sql file second, this is an empty table but is used as a placeholder
-    - insert the authorstable.sql file third, the foreign key constraints are commented out as the location table is not done yet
-    - insert the quotestable.sql file last, this may take several minutes
+  3. using the query tool, load the database.sql files inside ~/backend/table-queries/sample/ and run it
+    - insert the authorstable.sql file first
+    - insert the user_infotable.sql file second
+    - insert the quotestable.sql file last
   4. then refresh the database and all the tables should now be present
   5. you can then the query tool again to do sql querys
 
