@@ -55,12 +55,29 @@ def create_user(name, email, password):
     cur = conn.cursor()
     
     #check if user email is unique
-    cur.execute("SELECT name FROM user_info WHERE email = '" + str(email) + "'")
+    cur.execute("SELECT username FROM user_info WHERE email = '" + str(email) + "'")
     if (cur.rowcount > 0):
         print("Error: Email is not unique!")
         cur.close()
         return "0"
+
+    #checks if username is unique
+    cur.execute("SELECT username FROM user_info WHERE username = '" + str(name) +"'")
+    if (cur.rowcount > 0):
+        print("Error: Username is not unique!")
+        cur.close()
+        return "0"
+
+    #checks if username is NOT an author name
+    cur.execute("SELECT name FROM authors WHERE name = '" + str(name) + "'")
+    if (cur.rowcount > 0):
+        print("Error: Username is not valid. Please choose a new username.")
+        cur.close()
+        return "0"
     
+    #inserts into authors
+    cur.execute("INSERT INTO authors VALUES ('" + name + "', NULL" + ", NULL" + ", NULL" + ", NULL" + ")")
+
     #inserts into user_info
     # may need to change in case of SQL injection attack
     cur.execute("INSERT INTO user_info VALUES ('" + name + "', '" + email + "', '" + password + "' )")
