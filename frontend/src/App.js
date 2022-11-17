@@ -122,7 +122,27 @@ export default function App() {
     })
 
     const CreateQuote = quoteDetails => {
-      
+      axios.post(`${backendUrl}/create`, {
+        name: user.name,
+        quote: quoteDetails.quote,
+        category: quoteDetails.category
+      }).then(function (response) {
+        if (response.data === 1) {
+          // Successful Quote Creation
+          console.log(`User ${quoteDetails.username} created a quote`)
+          // Redirect to Quote. 
+          // Needs the response to contain the id of the created quote
+          // Intented to redirect to /quotes/${quoteID}
+          response.data.id
+        } else {
+          console.log(`Quote Creation Failed`)
+          setError(`Failed to Create Quote`)
+        }
+      }). catch(function (error)) {
+        console.log(error)
+        console.log(`Quote Creation failed for: ${user.name}`)
+        setError(`Quote Creation Failed: ${error}`)
+      }
     }
   }
 
