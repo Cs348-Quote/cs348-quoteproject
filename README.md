@@ -43,6 +43,18 @@ Run in development mode:
 `npm start`
 
 This should take you to the front page.
+
+## List of Implemented Features
+
+1. Random Quote of the Day  
+ - Located in ~/frontend/src/App.js and ~/frontend/src/FrontPage.js  
+
+2. User Authentication  
+ - Located in ~/frontend/src/App.js, ~/frontend/src/LoginForm.js, ~/frontend/src/SignupForm.js  
+ 
+3. Quote Creation  
+ - Located in ~/frontend/src/App.js and ~/frontend/src/QuoteCreation.js
+
 ## Logging into Quote Explorer
 
 You can navigate to the login page by clicking on the login button at the top right.
