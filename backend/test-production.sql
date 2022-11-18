@@ -31,9 +31,9 @@ SELECT name, location, coordx, coordy FROM authors WHERE region = ‘Italy’
 ORDER BY RANDOM() 
 LIMIT 10
 
-SELECT quote,author FROM quotes WHERE author IN (‘Vladimir Lenin’, ‘Marcus Tullius Cicero’ )
+SELECT quote,author FROM quotes WHERE author IN (‘Vladimir Lenin’)
 
-SELECT quote FROM quotes WHERE author = ‘Marcus Tullius Cicero’
+SELECT quote FROM quotes WHERE author = ‘Vladimir Lenin’
 
 Sample Queries:
 	SELECT name, time FROM authors WHERE time <= 948171485 AND time >= -63522643463
