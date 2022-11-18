@@ -3,13 +3,13 @@ import NavBar from "../components/NavBar"
 import { FormGroup } from "../components/user_info"
 import { useForm } from 'react-hook-form';
 
-function QuoteCreation({CreateQuote}) {
+function QuoteCreation({CreateQuote, Logout}) {
     const showCategories = categories.map((category) => <option key={category}>{category}</option>)
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     
     return (
         <div>
-            <NavBar/>
+            <NavBar Logout={Logout}/>
             
             <h1>Quote Creator</h1>
             <form onSubmit={handleSubmit(CreateQuote)}>
