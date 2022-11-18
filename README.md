@@ -1,6 +1,14 @@
 # cs348-quoteproject
 The platform we are using to host our database is postgresql
 
+## Generating the production dataset
+Data quote.json downloaded from:
+https://www.kaggle.com/datasets/akmittal/quotes-dataset
+
+Run the script from Data Preprocessing called quotetable.py to turn the quote.json into an insertable sql file
+Run The getauthorsfromwikidata.ipynb to download the authors table info from the wikidata database
+Run the authortable.py file to turn the downloaded authors json into an insertable sql file
+
 ## Database Setup
 To load the database into postgresql, simply: 
   1. install the latest version of postgres and open pgadmin 4
@@ -43,18 +51,6 @@ Run in development mode:
 `npm start`
 
 This should take you to the front page.
-
-## List of Implemented Features
-
-1. Random Quote of the Day  
- - Located in ~/frontend/src/App.js and ~/frontend/src/FrontPage.js  
-
-2. User Authentication  
- - Located in ~/frontend/src/App.js, ~/frontend/src/LoginForm.js, ~/frontend/src/SignupForm.js  
- 
-3. Quote Creation  
- - Located in ~/frontend/src/App.js and ~/frontend/src/QuoteCreation.js
-
 ## Logging into Quote Explorer
 
 You can navigate to the login page by clicking on the login button at the top right.
