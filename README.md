@@ -6,7 +6,9 @@ Data quote.json downloaded from:
 https://www.kaggle.com/datasets/akmittal/quotes-dataset
 
 Run the script from Data Preprocessing called quotetable.py to turn the quote.json into an insertable sql file
+
 Run The getauthorsfromwikidata.ipynb to download the authors table info from the wikidata database
+
 Run the authortable.py file to turn the downloaded authors json into an insertable sql file
 
 ## Database Setup
