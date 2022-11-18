@@ -167,8 +167,8 @@ export default function App() {
         <Route path='/login' element={<LoginForm Login={Login} error={error}/>}></Route>
         <Route path='/signup' element={<SignupForm SignUp={SignUp} />}></Route>
         <Route path='*' element={<ErrorPage />}></Route>
-        <Route path='/create' element={<QuoteCreation/>}></Route>
-        <Route path="/quotes/:id" element={<Quote GetQuote={GetQuote}/>}></Route>
+        <Route path='/create' element={<QuoteCreation Logout={Logout}/>}></Route>
+        <Route path="/quotes/:id" element={<Quote GetQuote={GetQuote} Logout={Logout}/>}></Route>
       </Routes>
     </Router>
   )
