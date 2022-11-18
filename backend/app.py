@@ -35,7 +35,7 @@ def make_quote():
 @app.route('/create', methods = ["POST"])
 def create_new_quote():
     input_json = request.get_json(force=True)
-    quote_info = {'name':input_json['name'],
+    quote_info = {'email':input_json['email'],
                 'quote':input_json['quote'],
                 'category':input_json['category']}
-    return add_quote(quote_info["name"], quote_info["quote"], quote_info["category"])
+    return add_quote(quote_info["email"], quote_info["quote"], quote_info["category"])

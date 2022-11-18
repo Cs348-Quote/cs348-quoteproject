@@ -124,7 +124,7 @@ def random_quote():
 
     return random_quote
 
-def add_quote(name, quote, category):
+def add_quote(email, quote, category):
     conn = psycopg2.connect(CONNECT_STRING)
     cur = conn.cursor()
 
@@ -133,15 +133,26 @@ def add_quote(name, quote, category):
     new_qid = cur.fetchone()[0] + 1
     print("THE MAX IS: " + str(new_qid) + "\n")
     
+    #get user name from user_info
+    print("TYPE:" + email)
+    cur.execute("SELECT username FROM user_info WHERE email = '" + email + "'")
+    temp = cur.fetchone()
+    name = str(temp[0])
+
+    #checks if name is in authors
+    print("NAME: " + name)
+    cur.execute("SELECT name FROM authors WHERE name = '" + name + "'")
+    if (cur.rowcount == 0):
+        print("Error: Username is not an author")
+        cur.close()
+        return "-1"
+
     #insert new quote into quotes
-    SQL = "INSERT INTO quotes (qid, quote, author, category) VALUES (%s, %s, %s, %s)"
-    data = (new_qid, quote, name, category)
-    cur.execute(SQL, data)
+    cur.execute("INSERT INTO quotes (qid, quote, author, category) VALUES ('" + str(new_qid) + "', '" + quote + "', '" + name + "', '" + category + "' )")
+    conn.commit()
+    conn.close()
     print("Quote added")
-    return "1"
-
-
-
+    return str(new_qid)
 
 if __name__ == '__main__':
     connect()
