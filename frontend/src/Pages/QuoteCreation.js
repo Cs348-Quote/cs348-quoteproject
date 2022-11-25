@@ -2,6 +2,7 @@ import { categories } from "../components/categories"
 import NavBar from "../components/NavBar"
 import { FormGroup } from "../components/user_info"
 import { useForm } from 'react-hook-form';
+import './QuoteCreation.css'
 
 function QuoteCreation({CreateQuote, Logout}) {
     const showCategories = categories.map((category) => <option key={category}>{category}</option>)
@@ -9,7 +10,7 @@ function QuoteCreation({CreateQuote, Logout}) {
     
     return (
         <div>
-            <NavBar Logout={Logout}/>
+            <div className='navBarWrapper'> <NavBar Logout={Logout} /> </div>
             
             <h1>Quote Creator</h1>
             <form onSubmit={handleSubmit(CreateQuote)}>

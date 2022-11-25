@@ -14,7 +14,8 @@ function FrontPage({ Logout, QuoteOfDay }) {
 
   return (
     <div>
-      <NavBar Logout={Logout} />
+      <div className='navBarWrapper'> <NavBar Logout={Logout} /> </div>
+      
       <div className="top">
             <body>
               <h1>{ofTheDay.quote}</h1>
