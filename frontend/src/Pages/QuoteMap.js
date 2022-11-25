@@ -21,13 +21,10 @@ const geoUrl =
 */
 
 
-function QuoteMap({Logout}) {
+function QuoteMap({Logout, fetchAuthors}) {
   /*
-    List of:
-    { 
-      authorName: 'bob', 
-      coordinates: [lon,lat] 
-    }, ...
+    asks for json list of country authors as:
+      [{ authorName: 'bob', coordinates: [lon,lat] }, {authorName: 'joe', ...}...]
 
     Note: S and W are negative lon and lat
   */  
@@ -36,12 +33,23 @@ function QuoteMap({Logout}) {
   const [countries, setCountries] = useState([])
 
   const handleDisplayClick = (e) => {
-    if (!countries.includes(country)) setCountries(oldCountries => [...oldCountries, country])
+    e.preventDefault()
+    if (!countries.includes(country)) {
+      setCountries(oldCountries => [...oldCountries, country])
+      // request for country
+      try {
+        fetchAuthors(country)
+      } catch (e) {
+        console.log(e)
+      }
+    }
   }
 
   const handleClear = (e) => {
+    e.preventDefault()
     setCountries([])
     // rerender markers
+    setMarkers([])
   }
 
   return (

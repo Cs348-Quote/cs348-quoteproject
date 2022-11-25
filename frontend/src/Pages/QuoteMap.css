@@ -43,4 +43,5 @@ h2 {
   word-wrap: break-word;
   white-space: normal;
   align-self: center;
+  align-items: center;
 }

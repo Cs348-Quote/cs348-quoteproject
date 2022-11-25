@@ -148,6 +148,16 @@ export default function App() {
     })
   }
 
+  const fetchAuthors = (country, setMarkers) => {
+    axios.get(`${backendUrl}/countries/${country}`).then((response) => {
+      /* asks for json list of country authors as:
+      [{ authorName: 'bob', coordinates: [lon,lat] }, {authorName: 'joe', ...}...]
+      */
+      const authorList = response.data
+      
+    })
+  }
+
   const QuoteOfDay = setOfTheDay => {
     axios.get(`${backendUrl}/random_quote`).then((response) => {
       setOfTheDay({author: response.data.author, quote: response.data.quote})
@@ -170,7 +180,7 @@ export default function App() {
         <Route path='*' element={<ErrorPage />}></Route>
         <Route path='/create' element={<QuoteCreation Logout={Logout} CreateQuote={CreateQuote}/>}></Route>
         <Route path="/quotes/:id" element={<Quote Logout={Logout} GetQuote={GetQuote}/>}></Route>
-        <Route path='/map' element={<QuoteMap Logout={Logout} />}></Route>
+        <Route path='/map' element={<QuoteMap Logout={Logout} fetchAuthors={fetchAuthors}/>}></Route>
       </Routes>
     </Router>
   )
