@@ -154,7 +154,8 @@ export default function App() {
       [{ authorName: 'bob', coordinates: [lon,lat] }, {authorName: 'joe', ...}...]
       */
       const authorList = response.data
-      
+      // might have to useEffect?
+      setMarkers(oldMarkers => [...oldMarkers, ...authorList])
     })
   }
 
