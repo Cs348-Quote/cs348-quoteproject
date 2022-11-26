@@ -1,0 +1,27 @@
+button, a {
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border: none;
+    background-color: #333;
+    max-width: 100%;
+    font-size: large;
+  }
+
+button:hover, a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.error {
+    color: #f2f2f2;
+    background-color: #771111;
+    padding: 10px;
+    
+}
+
+.buttons {
+    display: grid;
+}
