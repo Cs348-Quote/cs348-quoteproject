@@ -19,13 +19,12 @@ function NavBar({ Logout }) {
   // remove authorized from props and calculate locally for component
   // bug where redirect to front page without setting authorized
   const Authorized = (localStorage.getItem('user')) ? true : false
-  console.log(Authorized)
   const loginOrLogout = Authorized ? logoutButton : loginButton 
 
     return (
       <div className='topnav'>
         <div className='left'>
-          <Link to='/' > Quote Map </Link>
+          <Link to='/map' > Quote Map </Link>
           <Link to='/'>Quote Timeline</Link>
           <Link to='/create'>Create a Quote</Link>
         </div>

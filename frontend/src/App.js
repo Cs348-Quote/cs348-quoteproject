@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import axios from 'axios'
 import QuoteCreation from './Pages/QuoteCreation'
 import Quote from './Pages/Quote'
+import QuoteMap from './Pages/QuoteMap'
 
 
 export default function App() {
@@ -36,7 +37,6 @@ export default function App() {
 
     let admin = false
     let success = false
-    let done = false
 
     if (details.email === adminUser.email && details.password === adminUser.password) {
       console.log('Admin logged in')
@@ -52,7 +52,7 @@ export default function App() {
     }
 
     if (!admin) {
-      done = await axios.post(`${backendUrl}/login`, {
+      await axios.post(`${backendUrl}/login`, {
         name: details.name,
         email: details.email,
         password: details.password
@@ -136,14 +136,26 @@ export default function App() {
         // Needs the response to contain the id of the created quote
         // Intented to redirect to /quotes/${quoteID}
         const id = response.data.id
+        // TODO: @blacheo did we want to redirect to the quote page here?
       } else {
         console.log(`Quote Creation Failed`)
         setError(`Failed to Create Quote`)
       }
-    }). catch(function (error) {
+    }).catch(function (error) {
       console.log(error)
       console.log(`Quote Creation failed for: ${user.name}`)
       setError(`Quote Creation Failed: ${error}`)
+    })
+  }
+
+  const fetchAuthors = (country, setMarkers) => {
+    axios.get(`${backendUrl}/countries/${country}`).then((response) => {
+      /* asks for json list of country authors as:
+      [{ authorName: 'bob', coordinates: [lon,lat] }, {authorName: 'joe', ...}...]
+      */
+      const authorList = response.data
+      // might have to useEffect?
+      setMarkers(oldMarkers => [...oldMarkers, ...authorList])
     })
   }
 
@@ -169,6 +181,7 @@ export default function App() {
         <Route path='*' element={<ErrorPage />}></Route>
         <Route path='/create' element={<QuoteCreation Logout={Logout} CreateQuote={CreateQuote}/>}></Route>
         <Route path="/quotes/:id" element={<Quote Logout={Logout} GetQuote={GetQuote}/>}></Route>
+        <Route path='/map' element={<QuoteMap Logout={Logout} fetchAuthors={fetchAuthors}/>}></Route>
       </Routes>
     </Router>
   )
