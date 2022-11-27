@@ -1,6 +1,4 @@
-h2 {
-    color: black;
-}
+
 
 .author-info {
     display: flex;
@@ -9,6 +7,11 @@ h2 {
     padding: 2%;
     flex-wrap: wrap;
     justify-content: space-around;
+
+}
+
+.author-text h2 {
+    color: black;
 }
 
 .author-info img {
@@ -30,7 +33,7 @@ a {
     justify-content: space-around;
 }
 
-form {
+.author form {
     display: flex;
     justify-content: space-around;
     border: solid;

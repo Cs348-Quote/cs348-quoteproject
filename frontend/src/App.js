@@ -11,13 +11,13 @@ import Quote from './Pages/Quote'
 import QuoteMap from './Pages/QuoteMap'
 import Author from './Pages/Author'
 
-
+export const backendUrl = 'http://localhost:5000'
 export default function App() {
 
   // just for easier testing - remove later
   const adminUser = { email: 'test@test.com', password: 'test'}
 
-  const backendUrl = 'http://localhost:5000'
+  
   const [user, setUser] = useState({name: '', email: ''})
   const [error, setError] = useState('')
   
@@ -149,22 +149,7 @@ export default function App() {
     })
   }
 
-  const GetAuthorInfo = (id, sortPopAsc, startingIndex, nbQuotes, categories, setAuthorInfo) => {
-      axios.get(`${backendUrl}/author`, {
-        id: id,
-        sortPopAsc: sortPopAsc,
-        startingIndex: startingIndex,
-        nbQuotes: nbQuotes,
-        categories: categories
-      }).then(function (response) {
-        if (response.data === 1) {
-          console.log(`Author ${id} info retrieved`)
-          setAuthorInfo()
-        } else {
-          console.log(`Failed to retrieve info for Author ${id}`)
-        }
-      }) 
-  }
+  
 
   const fetchAuthors = (country, setMarkers) => {
     axios.get(`${backendUrl}/countries/${country}`).then((response) => {
@@ -200,7 +185,7 @@ export default function App() {
         <Route path='/create' element={<QuoteCreation Logout={Logout} CreateQuote={CreateQuote}/>}></Route>
         <Route path="/quotes/:id" element={<Quote Logout={Logout} GetQuote={GetQuote}/>}></Route>
         <Route path='/map' element={<QuoteMap Logout={Logout} fetchAuthors={fetchAuthors}/>}></Route>
-        <Route path='/author/:id' element={<Author Logout={Logout} GetAuthorInfo={GetAuthorInfo}></Author>}></Route>
+        <Route path='/author/:id' element={<Author Logout={Logout}></Author>}></Route>
       </Routes>
     </Router>
   )

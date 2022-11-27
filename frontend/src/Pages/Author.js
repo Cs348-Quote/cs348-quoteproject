@@ -1,6 +1,8 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useParams } from "react-router-dom";
+import { backendUrl } from "../App";
 import { categories } from "../components/categories";
 import NavBar from "../components/NavBar";
 import './Author.css'
@@ -11,7 +13,7 @@ function Quote({content, id}) {
     </div>
 }
 
-function Author({Logout, GetAuthorInfo}) {
+function Author({Logout}) {
     let { id } = useParams();
 
     const [authorInfo, setAuthorInfo] = useState({
@@ -25,7 +27,36 @@ function Author({Logout, GetAuthorInfo}) {
 
       useEffect(() => GetAuthorInfo(setAuthorInfo), [])
 
-      const { register, handleSubmit, reset, formState: { errors } } = useForm();
+      const { register, handleSubmit, reset, formState: { errors } } = useForm({
+        defaultValues: {
+            nbQuotes: 20,
+            authorId: authorInfo.author
+        }
+      }
+      );
+
+      const GetAuthorInfo = (AuthorInfo) => {
+        axios.get(`${backendUrl}/author`, {
+          authorId: AuthorInfo.id,
+          sortPopAsc: AuthorInfo.sortPopAsc,
+          startingIndex: AuthorInfo.startingIndex,
+          nbQuotes: AuthorInfo.nbQuotes,
+          categories: AuthorInfo.categories
+        }).then(function (response) {
+          if (response.data === 1) {
+            console.log(`Author ${AuthorInfo.id} info retrieved`)
+            
+            setAuthorInfo({
+                author: response.data.author,
+                description: response.data.description,
+                url: response.data.url,
+                quotes: response.data.quotes
+            })
+          } else {
+            console.log(`Failed to retrieve info for Author ${AuthorInfo.id}`)
+          }
+        }) 
+    }
       let quotes = authorInfo.quotes.map((quote) => 
         <Quote content={quote.content} id={quote.id}/>
       )
@@ -38,10 +69,10 @@ function Author({Logout, GetAuthorInfo}) {
       const ascDesc = ["ascending", "descending"].map((order) => <option key={order}>{order}</option>)
 
     return (
-        <div>
+        <div className="author">
             <NavBar Logout={Logout}></NavBar>
             <div className="author-info"> 
-                <div>
+                <div className="author-text">
                     <h2>{authorInfo.author}</h2>
                     <p>{authorInfo.description}</p>
                 </div>
