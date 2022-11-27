@@ -9,6 +9,7 @@ import axios from 'axios'
 import QuoteCreation from './Pages/QuoteCreation'
 import Quote from './Pages/Quote'
 import QuoteMap from './Pages/QuoteMap'
+import Author from './Pages/Author'
 
 
 export default function App() {
@@ -148,6 +149,23 @@ export default function App() {
     })
   }
 
+  const GetAuthorInfo = (id, sortPopAsc, startingIndex, nbQuotes, categories, setAuthorInfo) => {
+      axios.get(`${backendUrl}/author`, {
+        id: id,
+        sortPopAsc: sortPopAsc,
+        startingIndex: startingIndex,
+        nbQuotes: nbQuotes,
+        categories: categories
+      }).then(function (response) {
+        if (response.data === 1) {
+          console.log(`Author ${id} info retrieved`)
+          setAuthorInfo()
+        } else {
+          console.log(`Failed to retrieve info for Author ${id}`)
+        }
+      }) 
+  }
+
   const fetchAuthors = (country, setMarkers) => {
     axios.get(`${backendUrl}/countries/${country}`).then((response) => {
       /* asks for json list of country authors as:
@@ -182,6 +200,7 @@ export default function App() {
         <Route path='/create' element={<QuoteCreation Logout={Logout} CreateQuote={CreateQuote}/>}></Route>
         <Route path="/quotes/:id" element={<Quote Logout={Logout} GetQuote={GetQuote}/>}></Route>
         <Route path='/map' element={<QuoteMap Logout={Logout} fetchAuthors={fetchAuthors}/>}></Route>
+        <Route path='/author/:id' element={<Author Logout={Logout} GetAuthorInfo={GetAuthorInfo}></Author>}></Route>
       </Routes>
     </Router>
   )

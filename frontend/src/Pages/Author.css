@@ -1,0 +1,37 @@
+h2 {
+    color: black;
+}
+
+.author-info {
+    display: flex;
+    background-color: rgb(112, 197, 198);
+    border-bottom: solid;
+    padding: 2%;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.author-info img {
+    float: right;
+    width: 400px;
+    height: auto;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    
+}
+
+.quote {
+    border: solid;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+form {
+    display: flex;
+    justify-content: space-around;
+    border: solid;
+}
