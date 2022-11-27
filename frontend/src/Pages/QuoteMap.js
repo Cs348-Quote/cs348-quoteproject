@@ -34,7 +34,7 @@ function QuoteMap({Logout, fetchAuthors}) {
 
   const handleDisplayClick = (e) => {
     e.preventDefault()
-    if (!countries.includes(country)) {
+    if (!countries.includes(country) && country != "") {
       setCountries(oldCountries => [...oldCountries, country])
       // request for country
       try {
