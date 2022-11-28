@@ -104,9 +104,9 @@ function QuoteMap({Logout, fetchAuthors}) {
               }
             </Geographies>
             {
-              markers.map(({authorName, coordinates}) => (
+              markers.map(({authorName, coordinates, authorID}) => (
                 <Marker coordinates={coordinates}>
-                <a href='/authors/{authorName}'>
+                <a href={'/authors/' + authorID}>
                   <CustomCircle/>
                   <CustomText authorName={authorName}/>
                 </a>
