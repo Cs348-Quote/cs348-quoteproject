@@ -1,3 +1,8 @@
+.searchWrapper {
+  background-color:#282c34;
+  height: 985px;
+}
+
 .navBarWrapper {
   background-color: #333;
   width: 100%;
@@ -10,7 +15,26 @@
   background-color: #282c34;
 }
 
-.searchWrapper {
-  background-color:#282c34;
-  height: 985px;
+.toggleWrapper {
+  width: 1000px;
+  display: flex;
+}
+
+button {
+  margin: 20px;
+}
+
+
+.mainInput {
+  width: 20%;
+  margin: 15px;
+  font-size: 20px;
+}
+
+h1 {
+  margin: 10px;
+}
+
+h2 {
+  margin: 10px;
 }

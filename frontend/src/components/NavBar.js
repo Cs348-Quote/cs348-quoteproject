@@ -82,6 +82,7 @@ function NavBar({ Logout }) {
     return (
       <div className='SearchBar'>
         <input 
+          class='navBarInput'
           type='text'
           placeholder='Search by author...'
           id="message"

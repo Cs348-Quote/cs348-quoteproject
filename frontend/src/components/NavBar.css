@@ -1,11 +1,11 @@
 
 
-  .SearchBar {
-    text-align: center;
-    padding: 14px 16px;
-    display: flex;
+.SearchBar {
+  text-align: center;
+  padding: 14px 16px;
+  display: flex;
 
-  }
+}
   
   
 .User-Profile-Pic {
@@ -60,4 +60,10 @@ align-items: center;
 .topnav h2 {
   color: #ddd;
   text-align: center;
+}
+
+.navBarInput {
+  font-size: 15px;
+  height: 30%;
+  margin-top: 10%;
 }
