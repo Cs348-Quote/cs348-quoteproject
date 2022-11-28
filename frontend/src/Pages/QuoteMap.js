@@ -34,7 +34,7 @@ function QuoteMap({Logout, fetchAuthors}) {
 
   const handleDisplayClick = (e) => {
     e.preventDefault()
-    if (!countries.includes(country) && country != "") {
+    if (!countries.includes(country) && country !== "") {
       setCountries(oldCountries => [...oldCountries, country])
       // request for country
       try {
@@ -87,9 +87,9 @@ function QuoteMap({Logout, fetchAuthors}) {
             }
           </Geographies>
           {
-            markers.map(({authorName, coordinates}) => (
+            markers.map(({authorName, coordinates, authorID}) => (
               <Marker coordinates={coordinates}>
-              <a href='/authors/{authorName}'>
+              <a href={'/authors/' + authorID}>
                 <circle r='1' fill='red' stroke='black' strokewidth={0.4}/>
                 <text textAnchor='middle' y={10} fontSize={7.5}> {authorName} </text>
               </a>
