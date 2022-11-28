@@ -15,7 +15,7 @@ function Quote({content, id}) {
 
 function Author({Logout}) {
     let { id } = useParams();
-
+    const defaultNbQuotes = 20
     const [authorInfo, setAuthorInfo] = useState({
         author: "CS 348 students",
         description: "tired students",
@@ -30,18 +30,18 @@ function Author({Logout}) {
       const { register, handleSubmit, reset, formState: { errors } } = useForm({
         defaultValues: {
             nbQuotes: 20,
-            authorId: authorInfo.author
+            authorId: id
         }
       }
       );
 
       const GetAuthorInfo = (AuthorInfo) => {
         axios.get(`${backendUrl}/author`, {
-          authorId: AuthorInfo.id,
-          sortPopAsc: AuthorInfo.sortPopAsc,
-          startingIndex: AuthorInfo.startingIndex,
-          nbQuotes: AuthorInfo.nbQuotes,
-          categories: AuthorInfo.categories
+          authorId: parseInt(id),
+          sortPopAsc: AuthorInfo.sortPopAsc == "ascending",
+          startingIndex: 0,
+          nbQuotes: (AuthorInfo.nbQuotes === undefined)? defaultNbQuotes:AuthorInfo.nbQuotes,
+          categories: (AuthorInfo.category == "none" || AuthorInfo.category === undefined) ? null : AuthorInfo.category
         }).then(function (response) {
           if (response.data === 1) {
             console.log(`Author ${AuthorInfo.id} info retrieved`)
@@ -55,7 +55,17 @@ function Author({Logout}) {
           } else {
             console.log(`Failed to retrieve info for Author ${AuthorInfo.id}`)
           }
-        }) 
+        }).catch(function (error) {
+          console.log(error)
+          console.log(`Failed to retrieve author with id: ${id}`)
+          console.log({
+            authorId: parseInt(id),
+            sortPopAsc: AuthorInfo.sortPopAsc == "ascending",
+            startingIndex: 0,
+            nbQuotes: (AuthorInfo.nbQuotes === undefined)? defaultNbQuotes:AuthorInfo.nbQuotes,
+            categories:  (AuthorInfo.category == "none" || AuthorInfo.category === undefined) ? null : AuthorInfo.category
+          })
+        })
     }
       let quotes = authorInfo.quotes.map((quote) => 
         <Quote content={quote.content} id={quote.id}/>
