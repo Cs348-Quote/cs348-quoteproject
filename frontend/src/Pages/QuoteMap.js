@@ -54,11 +54,12 @@ function QuoteMap({Logout, fetchAuthors}) {
 
   return (
     <div className='Wrapper'>
+      
       <div className='navBarWrapper'>
         <NavBar Logout={Logout}/>
       </div>
-      
-      <h1> Explore quote authors on the interactive map! </h1>
+
+      <h2> Explore quote authors from: {countries.join(', ')} </h2>
 
       <div className='SelectionDiv'>
         <CountryDropdown value={country} onChange={(val) => {setCountry(val)}} />
@@ -70,35 +71,33 @@ function QuoteMap({Logout, fetchAuthors}) {
         </button>
       </div>
 
-      <h2> Currently displaying the authors from: {countries.join(', ')} </h2>
-
       <div className='Map'>
-      <ComposableMap projection='geoMercator'>
-        <ZoomableGroup center={[0, 0]} zoom={1}>
-          <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => (
-                <Geography 
-                  key={geo.rsmKey} 
-                  geography={geo} 
-                  fill='#429121' stroke='#282b28' strokeWidth={0.5}
-                />
+        <ComposableMap projection='geoMercator'>
+          <ZoomableGroup center={[0, 0]} zoom={1}>
+            <Geographies geography={geoUrl}>
+              {({ geographies }) =>
+                geographies.map((geo) => (
+                  <Geography 
+                    key={geo.rsmKey} 
+                    geography={geo} 
+                    fill='#429121' stroke='#282b28' strokeWidth={0.5}
+                  />
+                ))
+              }
+            </Geographies>
+            {
+              markers.map(({authorName, coordinates}) => (
+                <Marker coordinates={coordinates}>
+                <a href='/authors/{authorName}'>
+                  <circle r='1' fill='red' stroke='black' strokewidth={0.4}/>
+                  <text textAnchor='middle' y={10} fontSize={7.5}> {authorName} </text>
+                </a>
+                </Marker>
               ))
             }
-          </Geographies>
-          {
-            markers.map(({authorName, coordinates}) => (
-              <Marker coordinates={coordinates}>
-              <a href='/authors/{authorName}'>
-                <circle r='1' fill='red' stroke='black' strokewidth={0.4}/>
-                <text textAnchor='middle' y={10} fontSize={7.5}> {authorName} </text>
-              </a>
-              </Marker>
-            ))
-          }
-        </ZoomableGroup>
-      </ComposableMap>
-    </div>
+          </ZoomableGroup>
+        </ComposableMap>
+      </div>
     </div>
   )
 }
