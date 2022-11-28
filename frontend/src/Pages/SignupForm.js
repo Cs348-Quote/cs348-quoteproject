@@ -21,7 +21,7 @@ function SignupForm({SignUp}) {
     <div>
         <form onSubmit={handleSignUp} >
           <div  className = 'form-body'>
-          <h2>Signup Form</h2>
+          <h2> Sign Up </h2>
           {signupEntry}
           <div className='buttons'>
             <button type='submit'>Next</button>

@@ -24,23 +24,22 @@ function LoginForm({Login, error}) {
     (type)=> <FormGroup userDetailType={type} details={details} setDetails={setDetails}/>)
 
   return (
-    <form onSubmit={handleLogin}>
-      <div className = 'form-body'>
-        <h2> Login </h2>
-      {(error !== '') ? ( <div className='error'> {error} </div> ) : '' }
-      
-      {loginInfo}
-    
-      
-      <div className='buttons'>
-      <button type='submit'>Next</button>
-        <Link to='/signup'> Create an account </Link>
-      </div>
+    <body>
+      <form onSubmit={handleLogin}>
+        <div className = 'form-body'>
+          <h2> Login </h2>
+        {(error !== '') ? ( <div className='error'> {error} </div> ) : '' }
         
-   
-        
-      </div>
-    </form>
+        {loginInfo}
+      
+        <div className='buttons'>
+        <button type='submit'>Next</button>
+          <Link to='/signup'> Create an account </Link>
+        </div>
+          
+        </div>
+      </form>
+    </body>
   )
 }
 

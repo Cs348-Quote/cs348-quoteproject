@@ -59,7 +59,7 @@ function NavBar({ Logout }) {
   
   function SearchBar(props) {
     return (
-      <div className='SearchBar'>
+      <div className='SearchBar' placeholder='Search by author...'>
         <input></input>
         <button>Search</button>
       </div>
