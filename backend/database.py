@@ -154,5 +154,55 @@ def add_quote(email, quote, category):
     print("Quote added")
     return str(new_qid)
 
+def author_info(aid, sortby, startIndex, num_of_quotes, categories):
+    conn = psycopg2.connect(CONNECT_STRING)
+    cur = conn.cursor()
+
+    #gets name and description of author
+    cur.execute("SELECT name, description, image FROM authors WHERE aid = '" + str(aid) + "'")
+    if (cur.rowcount == 0):
+        print("Error: Multiple descriptions for an author")
+        cur.close()
+        return "-1"
+    temp = cur.fetchone()
+    name = temp[0]
+    description = temp[1]
+    image = temp[2]
+
+    #set to default image place holder
+    if image is None:
+        image = "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/clans/9948323/85cb81325da4164e4dcec8e3e3a0389df026d7c4.png"
+    
+    
+    #assume true = ascending
+    sort_quotes_by = ""
+    if sortby:
+        sort_quotes_by = "ASC"
+    else:
+        sort_quotes_by = "DESC"
+
+    if categories is None:
+        cur.execute("SELECT quote FROM quotes WHERE author = '" + name + "' ORDER BY quote " + sort_quotes_by + ";")
+    else:
+        cur.execute("SELECT quote FROM quotes WHERE author = '" + name + "' and '" + categories + "' in tags ORDER BY '" + sort_quotes_by + "'")
+    quotes = cur.fetchall()
+
+    requested_quotes = quotes[startIndex : (startIndex + num_of_quotes)]
+
+    if len(quotes) != num_of_quotes:
+        print("Error: Number of quotes in database do not match number requested")
+        cur.close()
+        return "-1"
+
+    requested_items = {
+        "description" : description,
+        "quotes" : requested_quotes,
+    }
+    
+    print(requested_items)
+
+    cur.close()
+    return requested_items
+
 if __name__ == '__main__':
     connect()
