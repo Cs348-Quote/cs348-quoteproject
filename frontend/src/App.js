@@ -148,8 +148,11 @@ export default function App() {
     })
   }
 
+  // send country name in backend url
   const fetchAuthors = (country, setMarkers) => {
-    axios.get(`${backendUrl}/countries/${country}`).then((response) => {
+    axios.get(`${backendUrl}/countries`, { 
+      params: { country: country } 
+    }).then((response) => {
       /* asks for json list of country authors as:
       [{ authorName: 'bob', coordinates: [lon,lat] }, {authorName: 'joe', ...}...]
       */

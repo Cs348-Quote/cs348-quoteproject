@@ -58,10 +58,16 @@ function NavBar({ Logout }) {
   }
   
   function SearchBar(props) {
+
+    const handleSearchClick = (e) => {
+      e.preventDefault();
+
+    }
+
     return (
-      <div className='SearchBar' placeholder='Search by author...'>
-        <input></input>
-        <button>Search</button>
+      <div className='SearchBar'>
+        <input placeholder='Search by author...'></input>
+        <button onClick={handleSearchClick}>Search</button>
       </div>
     )
   }
