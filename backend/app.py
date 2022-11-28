@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from database import check_login, create_user, random_quote, add_quote
+from database import check_login, create_user, random_quote, add_quote, get_map_info
 
 app = Flask(__name__)
 CORS(app)
@@ -39,3 +39,11 @@ def create_new_quote():
                 'quote':input_json['quote'],
                 'category':input_json['category']}
     return add_quote(quote_info["email"], quote_info["quote"], quote_info["category"])
+
+@app.route('/map', methods = ["GET"])
+def send_map_info():
+    input_json = request.get_json(force=True)
+    print("INPUT: " + input_json)
+    country = jsonify(input_json)
+    return get_map_info(country)
+

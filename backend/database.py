@@ -154,5 +154,23 @@ def add_quote(email, quote, category):
     print("Quote added")
     return str(new_qid)
 
+def get_map_info(requested_country):
+    conn = psycopg2.connect(CONNECT_STRING)
+    cur = conn.cursor()
+    print("penius musoic")
+    list_of_authors_and_coords = []
+
+    #retrieve authors with country "requested_country"
+    sql_statement = "SELECT * FROM authors WHERE country = %s;"
+    data = (requested_country, )
+    cur.execute(sql_statement, data)
+
+    list_of_authors_and_coords = cur.fetchall()
+
+    print("Authors retrieved")
+    conn.close()
+    return list_of_authors_and_coords
+    
+
 if __name__ == '__main__':
     connect()
