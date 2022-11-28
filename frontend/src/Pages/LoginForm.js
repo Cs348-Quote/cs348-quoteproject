@@ -28,9 +28,17 @@ function LoginForm({Login, error}) {
       <div className = 'form-body'>
         <h2> Login </h2>
       {(error !== '') ? ( <div className='error'> {error} </div> ) : '' }
+      
       {loginInfo}
-        <button type='submit'>Next</button>
-        <Link to='/signup'> Create an account. </Link>
+    
+      
+      <div className='buttons'>
+      <button type='submit'>Next</button>
+        <Link to='/signup'> Create an account </Link>
+      </div>
+        
+   
+        
       </div>
     </form>
   )
