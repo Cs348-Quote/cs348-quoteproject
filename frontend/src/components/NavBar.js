@@ -2,6 +2,7 @@
 import logo from '../logo.svg'
 import './NavBar.css'
 import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
 
 function NavBar({ Logout }) {
 
@@ -58,10 +59,37 @@ function NavBar({ Logout }) {
   }
   
   function SearchBar(props) {
+
+    const [searchInput, setSearchInput] = useState('')
+    
+    const navigate = useNavigate()
+
+    const handleSearchClick = (e) => {
+      e.preventDefault()
+      if (searchInput !== '') navigate('/search', { state: { query: searchInput } })
+    }
+
+    const handleChange = (e) => {
+      setSearchInput(e.target.value)
+    }
+
+    const handleKeyDownSearch = (e) => {
+      if (e.key === 'Enter') {
+        if (searchInput !== '') navigate('/search', { state: { query: searchInput } })
+      }
+    }
+
     return (
-      <div className='SearchBar' placeholder='Search by author...'>
-        <input></input>
-        <button>Search</button>
+      <div className='SearchBar'>
+        <input 
+          type='text'
+          placeholder='Search by author...'
+          id="message"
+          name="message"
+          onChange={handleChange}
+          value={searchInput}
+          onKeyDown={handleKeyDownSearch}/>
+        <button onClick={handleSearchClick}>Search</button>
       </div>
     )
   }
