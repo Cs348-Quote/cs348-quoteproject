@@ -4,7 +4,8 @@ import {
   Geographies,
   Geography,
   ZoomableGroup,
-  Marker
+  Marker,
+  useZoomPanContext
 } from 'react-simple-maps';
 import { CountryDropdown } from 'react-country-region-selector';
 import NavBar from '../components/NavBar';
@@ -34,7 +35,7 @@ function QuoteMap({Logout, fetchAuthors}) {
 
   const handleDisplayClick = (e) => {
     e.preventDefault()
-    if (!countries.includes(country) && country != "") {
+    if (!countries.includes(country) && country !== "") {
       setCountries(oldCountries => [...oldCountries, country])
       // request for country
       try {
@@ -50,6 +51,23 @@ function QuoteMap({Logout, fetchAuthors}) {
     setCountries([])
     // rerender markers
     setMarkers([])
+  }
+
+  const CustomText = ({authorName}) => {
+    const ctx = useZoomPanContext()
+  
+    const fontSize = 7.8 / ctx.k
+    const yDist = 10 / ctx.k
+  
+    return <text textAnchor='middle' y={yDist} fontSize={fontSize}> {authorName} </text>
+  }
+
+  const CustomCircle = () => {
+    const ctx = useZoomPanContext()
+    const r = 2.25 / ctx.k
+    const strokeWidth = 1 / ctx.k
+
+    return <circle r={r} fill='red' stroke='black' stroke-width={strokeWidth}/>
   }
 
   return (
@@ -89,8 +107,8 @@ function QuoteMap({Logout, fetchAuthors}) {
               markers.map(({authorName, coordinates}) => (
                 <Marker coordinates={coordinates}>
                 <a href='/authors/{authorName}'>
-                  <circle r='1' fill='red' stroke='black' strokewidth={0.4}/>
-                  <text textAnchor='middle' y={10} fontSize={7.5}> {authorName} </text>
+                  <CustomCircle/>
+                  <CustomText authorName={authorName}/>
                 </a>
                 </Marker>
               ))
