@@ -38,7 +38,7 @@ function QuoteMap({Logout, fetchAuthors}) {
       setCountries(oldCountries => [...oldCountries, country])
       // request for country
       try {
-        fetchAuthors(country)
+        fetchAuthors(country, setMarkers)
       } catch (e) {
         console.log(e)
       }
