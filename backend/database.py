@@ -199,7 +199,7 @@ def author_info(aid, sortby, startIndex, num_of_quotes, categories):
             "id": quote[1]
         })
 
-    requested_quotes = quotes[startIndex : (startIndex + num_of_quotes)]
+    requested_quotes = quotes[startIndex : (startIndex + int(num_of_quotes))]
 
     # if len(quotes) != num_of_quotes:
     #     print("Error: Number of quotes in database do not match number requested")
