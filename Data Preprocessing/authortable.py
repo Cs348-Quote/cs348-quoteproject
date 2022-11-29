@@ -29,12 +29,27 @@ def createsql(inputpath,outputpath):
             insertcoord = "'"+insertcoord.replace("Point(","").replace(" ", "' , '")[:-1] + "'"
         else:
             insertcoord = "NULL,NULL"
+        descr = i["description"]
+        if descr != None:
+            descr = "'"+descr.replace("'","\"") + "'"
+        else:
+            descr = "NULL"
+        countrybirth= i["regionLabel"]
+        if countrybirth != None:
+            countrybirth = "'"+countrybirth.replace("'","\"")+ "'"
+        else:
+            countrybirth = "NULL"
+        img= i["image"]
+        if img != None:
+            img = "'"+img+ "'"
+        else:
+            img = "NULL"
         insertloca = i["birthlocation"]
         if insertloca != None and "/" not in insertloca:
             insertloca = "'"+insertloca.replace("'","\"") + "'"
         else:
             insertloca = "NULL"
-        ligma = "('"+i["name"].replace("'","\"")+ "'," + insertloca + ",'" + newlist + "'," + insertcoord +")"
+        ligma = "("+ str(count) + ",'"+i["name"].replace("'","\"")+ "'," + insertloca + "," + countrybirth + ",'" + newlist + "'," + img + ","+ descr + "," + insertcoord +")"
         print(ligma)
         f.write(ligma)
         if count+1 != len(data):
@@ -46,6 +61,6 @@ def createsql(inputpath,outputpath):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    createsql("C:/Users/chun/Desktop/Repo/cs348-quoteproject/backend/table-queries/authors.json","D:/Downloads/archive (2)/authorstable.sql")
+    createsql("C:/Users/chun/Desktop/Repo/cs348-quoteproject/backend/table-queries/production/authors.json","D:/Downloads/archive (2)/authorstable.sql")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

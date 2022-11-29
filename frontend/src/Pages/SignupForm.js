@@ -19,14 +19,21 @@ function SignupForm({SignUp}) {
     }
   return (
     <div>
-      <div>SignupForm</div>
-        <form onSubmit={handleSignUp}>
+        <form onSubmit={handleSignUp} >
+          <div  className = 'form-body'>
+          <h2> Sign Up </h2>
           {signupEntry}
-          <button type='submit'>Next</button>
+          <div className='buttons'>
+            <button type='submit'>Next</button>
+            <Link to='/login'> Already have an account? </Link>
+          </div>
+          
+          </div>
+     
+        
+    
         </form>
-      <div>
-        <Link to='/login'> Already have an account? </Link>
-      </div>
+      
     </div>
   )
 }

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from database import check_login, create_user, random_quote, add_quote, author_info
+from database import check_login, create_user, random_quote, add_quote, author_info, get_map_info
+
 
 app = Flask(__name__)
 CORS(app)
@@ -40,6 +41,7 @@ def create_new_quote():
                 'category':input_json['category']}
     return add_quote(quote_info["email"], quote_info["quote"], quote_info["category"])
 
+
 @app.route('/author', methods = ["POST"])
 def get_author_info():
     input_json = request.get_json(force=True)
@@ -50,3 +52,12 @@ def get_author_info():
           'nbQuotes':input_json['nbQuotes'],
           'categories':input_json['categories']}
     return author_info(info["authorId"], info["sortPopAsc"], info["startingIndex"], info["nbQuotes"], info["categories"])
+
+@app.route('/countries', methods = ["GET"])
+def send_map_info():
+    print("BACKEND STARTING")
+    #input_json = request.get_json(force=True)
+    #map_input = {'country':input_json['country']}
+    map_input = request.args.get('country')
+    print(map_input)
+

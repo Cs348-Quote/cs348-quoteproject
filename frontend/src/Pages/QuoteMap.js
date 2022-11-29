@@ -4,7 +4,8 @@ import {
   Geographies,
   Geography,
   ZoomableGroup,
-  Marker
+  Marker,
+  useZoomPanContext
 } from 'react-simple-maps';
 import { CountryDropdown } from 'react-country-region-selector';
 import NavBar from '../components/NavBar';
@@ -34,11 +35,11 @@ function QuoteMap({Logout, fetchAuthors}) {
 
   const handleDisplayClick = (e) => {
     e.preventDefault()
-    if (!countries.includes(country) && country != "") {
+    if (!countries.includes(country) && country !== "") {
       setCountries(oldCountries => [...oldCountries, country])
       // request for country
       try {
-        fetchAuthors(country)
+        fetchAuthors(country, setMarkers)
       } catch (e) {
         console.log(e)
       }
@@ -52,13 +53,31 @@ function QuoteMap({Logout, fetchAuthors}) {
     setMarkers([])
   }
 
+  const CustomText = ({authorName}) => {
+    const ctx = useZoomPanContext()
+  
+    const fontSize = 7.8 / ctx.k
+    const yDist = 10 / ctx.k
+  
+    return <text textAnchor='middle' y={yDist} fontSize={fontSize}> {authorName} </text>
+  }
+
+  const CustomCircle = () => {
+    const ctx = useZoomPanContext()
+    const r = 2.25 / ctx.k
+    const strokeWidth = 1 / ctx.k
+
+    return <circle r={r} fill='red' stroke='black' stroke-width={strokeWidth}/>
+  }
+
   return (
     <div className='Wrapper'>
+      
       <div className='navBarWrapper'>
         <NavBar Logout={Logout}/>
       </div>
-      
-      <h1> Explore quote authors on the interactive map! </h1>
+
+      <h2> Explore quote authors from: {countries.join(', ')} </h2>
 
       <div className='SelectionDiv'>
         <CountryDropdown value={country} onChange={(val) => {setCountry(val)}} />
@@ -70,35 +89,33 @@ function QuoteMap({Logout, fetchAuthors}) {
         </button>
       </div>
 
-      <h2> Currently displaying the authors from: {countries.join(', ')} </h2>
-
       <div className='Map'>
-      <ComposableMap projection='geoMercator'>
-        <ZoomableGroup center={[0, 0]} zoom={1}>
-          <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => (
-                <Geography 
-                  key={geo.rsmKey} 
-                  geography={geo} 
-                  fill='#429121' stroke='#282b28' strokeWidth={0.5}
-                />
+        <ComposableMap projection='geoMercator'>
+          <ZoomableGroup center={[0, 0]} zoom={1}>
+            <Geographies geography={geoUrl}>
+              {({ geographies }) =>
+                geographies.map((geo) => (
+                  <Geography 
+                    key={geo.rsmKey} 
+                    geography={geo} 
+                    fill='#429121' stroke='#282b28' strokeWidth={0.5}
+                  />
+                ))
+              }
+            </Geographies>
+            {
+              markers.map(({authorName, coordinates, authorID}) => (
+                <Marker coordinates={coordinates}>
+                <a href={'/author/' + authorID}>
+                  <CustomCircle/>
+                  <CustomText authorName={authorName}/>
+                </a>
+                </Marker>
               ))
             }
-          </Geographies>
-          {
-            markers.map(({authorName, coordinates}) => (
-              <Marker coordinates={coordinates}>
-              <a href='/authors/{authorName}'>
-                <circle r='1' fill='red' stroke='black' strokewidth={0.4}/>
-                <text textAnchor='middle' y={10} fontSize={7.5}> {authorName} </text>
-              </a>
-              </Marker>
-            ))
-          }
-        </ZoomableGroup>
-      </ComposableMap>
-    </div>
+          </ZoomableGroup>
+        </ComposableMap>
+      </div>
     </div>
   )
 }
