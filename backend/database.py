@@ -181,22 +181,36 @@ def author_info(aid, sortby, startIndex, num_of_quotes, categories):
     else:
         sort_quotes_by = "DESC"
 
-    if categories is None:
-        cur.execute("SELECT quote FROM quotes WHERE author = '" + name + "' ORDER BY quote " + sort_quotes_by + ";")
+    if categories == "None":
+        cur.execute("SELECT quote, qid FROM quotes WHERE author = '" 
+                    + name + "' ORDER BY quote " + sort_quotes_by + ";")
     else:
-        cur.execute("SELECT quote FROM quotes WHERE author = '" + name + "' and '" + categories + "' in tags ORDER BY '" + sort_quotes_by + "'")
+        cur.execute("SELECT quote, qid FROM quotes WHERE author = '" 
+                    + name + "' and '" 
+                    + categories + "'= ANY(tags) ORDER BY quote " 
+                    + sort_quotes_by + ";")
     quotes = cur.fetchall()
+
+    # properly transform quote data
+    requested_quotes = []
+    for quote in quotes:
+        requested_quotes.append({
+            "content": quote[0],
+            "id": quote[1]
+        })
 
     requested_quotes = quotes[startIndex : (startIndex + num_of_quotes)]
 
-    if len(quotes) != num_of_quotes:
-        print("Error: Number of quotes in database do not match number requested")
-        cur.close()
-        return "-1"
+    # if len(quotes) != num_of_quotes:
+    #     print("Error: Number of quotes in database do not match number requested")
+    #     cur.close()
+    #     return "-1"
 
     requested_items = {
+        "author": name,
         "description" : description,
         "quotes" : requested_quotes,
+        "url": image
     }
     
     print(requested_items)

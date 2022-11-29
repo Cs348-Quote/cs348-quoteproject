@@ -7,23 +7,22 @@
     padding: 2%;
     flex-wrap: wrap;
     justify-content: space-around;
-
+    width: 100%;
 }
 
-.author-text h2 {
+.author-text h1 {
     color: black;
 }
 
 .author-info img {
     float: right;
-    width: 400px;
+    width: 220px;
     height: auto;
 }
 
 a {
     color: black;
     text-decoration: none;
-    
 }
 
 .quote {

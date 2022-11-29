@@ -40,9 +40,10 @@ def create_new_quote():
                 'category':input_json['category']}
     return add_quote(quote_info["email"], quote_info["quote"], quote_info["category"])
 
-@app.route('/author', methods = ["GET"])
+@app.route('/author', methods = ["POST"])
 def get_author_info():
     input_json = request.get_json(force=True)
+    print(input_json)
     info = {'authorId':input_json['authorId'],
           'sortPopAsc':input_json['sortPopAsc'],
           'startingIndex':input_json['startingIndex'],
