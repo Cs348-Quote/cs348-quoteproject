@@ -84,7 +84,7 @@ function NavBar({ Logout }) {
         <input 
           class='navBarInput'
           type='text'
-          placeholder='Search by author...'
+          placeholder='Search quotes by keyword...'
           id="message"
           name="message"
           onChange={handleChange}

@@ -13,22 +13,29 @@
 
 .searchBody {
   background-color: #282c34;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .toggleWrapper {
-  width: 1000px;
+  margin:auto;
+  width: 390px;
   display: flex;
 }
 
 button {
   margin: 20px;
+  background-color: rgb(77, 77, 77);
+  width: 30%;
 }
 
 
 .mainInput {
-  width: 20%;
+  width: 50%;
   margin: 15px;
   font-size: 20px;
+  height: auto;
 }
 
 h1 {
@@ -37,4 +44,43 @@ h1 {
 
 h2 {
   margin: 10px;
+}
+
+.searchDiv {
+  display: flex;
+  margin: auto;
+  width: 700px;
+}
+
+
+p {
+  color: white;
+  margin: 20px;
+}
+
+.resultsDiv {
+  margin: auto;
+  width: 500px;
+}
+
+
+.resultAuthor {
+  width: 100%;
+  height: 20%;
+  margin: 10px;
+}
+
+.resultAuthor a {
+  background-color: rgb(50, 89, 103);
+}
+
+.resultQuote {
+  display: flex;
+  width: 100%;
+  height: auto;
+  margin: 0px;
+}
+
+.resultQuote a {
+  background-color: rgb(50, 89, 103);
 }

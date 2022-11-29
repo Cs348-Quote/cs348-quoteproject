@@ -39,3 +39,15 @@ def create_new_quote():
                 'quote':input_json['quote'],
                 'category':input_json['category']}
     return add_quote(quote_info["email"], quote_info["quote"], quote_info["category"])
+
+@app.route('/search', methods = ["POST"])
+def search():
+    input_json = request.get_json(force=True)
+    print(input_json)
+    
+    # return [{"authorName": "Samuel Pei", "authorId": 2}, 
+    #         {"authorName": "Chun Pei", "authorId": 3}]
+    
+    return [{"quoteContent": "Baby Pig Eats dinosaurs because sam is mad", "quoteId": 2, "authorName": "Samwell", "authorId": 3},
+            {"quoteContent": "Baby Dragon", "quoteId": 5, "authorName": "Chun", "authorId": 2}]
+    return "hi"
