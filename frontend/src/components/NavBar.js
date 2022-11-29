@@ -25,7 +25,7 @@ function NavBar({ Logout }) {
       <div className='topnav'>
         <div className='left'>
           <Link to='/map' > Quote Map </Link>
-          <Link to='/'>Quote Timeline</Link>
+          <Link to='/timeline'>Quote Timeline</Link>
           <Link to='/create'>Create a Quote</Link>
         </div>
         <div className='center'><Link to='/'><h2>Quote Explorer</h2></Link></div>
