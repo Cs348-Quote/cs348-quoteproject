@@ -77,6 +77,7 @@ function NavBar({ Logout }) {
       if (e.key === 'Enter') {
         if (searchInput !== '') navigate('/search', { state: { query: searchInput } })
       }
+
     }
 
     return (

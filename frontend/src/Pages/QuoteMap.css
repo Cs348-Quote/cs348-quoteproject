@@ -1,8 +1,8 @@
 .Map {
   background-color: #23abd1;
-  width: 80%;
-  height: 60%;
+  width: 977px;
   border-style: double;
+  margin: 5px;
 }
 
 .Wrapper {
@@ -13,6 +13,8 @@
   justify-content: center;
   align-items: center;
   background-color: #282c34;
+  margin: 0;
+  overflow: hidden
 }
 
 .navBarWrapper {
@@ -44,4 +46,8 @@ h2 {
   white-space: normal;
   align-self: center;
   align-items: center;
+}
+
+button {
+  margin: 2px;
 }

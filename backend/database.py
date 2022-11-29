@@ -1,6 +1,7 @@
 import psycopg2
 import os
 import json
+from fuzzywuzzy import fuzz
 from os.path import exists
 from datetime import datetime
 from dotenv import load_dotenv
@@ -153,6 +154,63 @@ def add_quote(email, quote, category):
     conn.close()
     print("Quote added")
     return str(new_qid)
+
+
+def get_map_info(requested_country):
+    conn = psycopg2.connect(CONNECT_STRING)
+    cur = conn.cursor()
+    list_of_authors_and_coords = []
+    result = []
+
+    list_of_countries_in_DB = ["Afghanistan", "Algeria", "Ancient Rome", "Argentina", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Barbados", "Belarus", "Belgium", "Bosnia and Herzegovina", "Brazil", "British Empire", "Bulgaria", "Canada", "Chile", "Classical Athens", "Colombia", "concessions in China", "Croatia", "Cuba", "Czech Republic", "Denmark", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "Ethiopia", "Finland", "France", "Free City of Danzig", "Georgia", "German Reich", "Germany", "Ghana", "Greece", "Guatemala", "Guyana", "Haiti", "Hungary", "India", "Indonesia", "Iran", "Iraq", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kingdom of Denmark", "Kingdom of England", "Kosovo", "Kuwait", "Latin Empire", "Latvia", "Lebanon", "Liberia", "Lithuania", "Luxembourg", "Malawi", "Malta", "Mandatory Palestine", "Mauritius", "Mexico", "Mongolia", "Morocco", "Mozambique", "Mughal Empire", "Myanmar", "Nepal", "Netherlands", "New Zealand", "Nigeria", "North Korea", "North Macedonia", "Norway", "Pakistan", "People\"s Republic of China", "Peru", "Philippines", "Poland", "Portugal", "Principality of Bitlis", "Principality of Bulgaria", "Province of Massachusetts Bay", "Prussia", "Puerto Rico", "Republic of China", "Republic of Ireland", "Republic of Vietnam", "Romania", "Russia", "Rwanda", "Saint Lucia", "Serbia", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "Song", "South Africa", "South Korea", "Soviet Union", "Spain", "Sri Lanka", "State of Palestine", "Sweden", "Switzerland", "Syria", "Taiwan", "Tanzania", "Thailand", "The Bahamas", "Trinidad and Tobago", "Tunisia", "Turkey", "Ukraine", "Union of South Africa", "United Arab Emirates", "United Kingdom", "United Kingdom of Great Britain and Ireland", "United States of America", "Uruguay", "Venezuela", "Vietnam", "Yemen", "Zhou dynasty", "Zimbabwe", "Zimbabwe Rhodesia", "فلسطين"]
+
+    #retrieve authors with country "requested_country"
+    sql_statement = "SELECT name, coordx, coordy, aid FROM authors WHERE country IN (%s);"
+    # print("REQUESTED COUNTRY: ")
+    # print(requested_country)
+    best = -1
+    list_of_best_countries = []
+    for x in list_of_countries_in_DB:
+        temp = fuzz.partial_ratio(requested_country, x)
+        if temp == 100:
+            list_of_best_countries.append(x)
+        if temp > best:
+            list_of_best_countries = [x]
+            best = temp
+
+    print(list_of_best_countries)
+    for x in list_of_best_countries:
+        data = (x,)
+        # print("DATA: ")
+        # print(data)
+        cur.execute(sql_statement, data)
+        list_of_authors_and_coords += cur.fetchall()
+
+    print(list_of_authors_and_coords)
+
+    print("BEST: " + str(best))
+    if best <= 78:
+        print("Error: No quotes from that country")
+        conn.close()
+        return result
+    
+    print("here")
+    for x in list_of_authors_and_coords:
+        temp_dict = {}
+        temp_dict["authorName"] = x[0]
+
+        #case Eileen Chang
+        if x[1] == None or x[2] == None:
+            continue
+
+        temp_dict["coordinates"] = [x[1], x[2]]
+        temp_dict["authorID"] = x[3]
+        result.append(temp_dict)
+    
+    print(result)
+    #print("Authors and Coordinates retrieved")
+    conn.close()
+    return result
 
 if __name__ == '__main__':
     connect()

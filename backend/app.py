@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from database import check_login, create_user, random_quote, add_quote
+from database import check_login, create_user, random_quote, add_quote, get_map_info
 
 app = Flask(__name__)
 CORS(app)
@@ -40,6 +40,7 @@ def create_new_quote():
                 'category':input_json['category']}
     return add_quote(quote_info["email"], quote_info["quote"], quote_info["category"])
 
+
 @app.route('/search', methods = ["POST"])
 def search():
     input_json = request.get_json(force=True)
@@ -51,3 +52,13 @@ def search():
     return [{"quoteContent": "Baby Pig Eats dinosaurs because sam is mad", "quoteId": 2, "authorName": "Samwell", "authorId": 3},
             {"quoteContent": "Baby Dragon", "quoteId": 5, "authorName": "Chun", "authorId": 2}]
     return "hi"
+
+@app.route('/countries', methods = ["GET"])
+def send_map_info():
+    print("BACKEND STARTING")
+    #input_json = request.get_json(force=True)
+    #map_input = {'country':input_json['country']}
+    map_input = request.args.get('country')
+    print(map_input)
+    return get_map_info(map_input)
+
