@@ -159,6 +159,70 @@ def add_quote(email, quote, category):
     print("Quote added")
     return str(new_qid)
 
+def author_info(aid, sortby, startIndex, num_of_quotes, categories):
+    conn = psycopg2.connect(CONNECT_STRING)
+    cur = conn.cursor()
+
+    #gets name and description of author
+    cur.execute("SELECT name, description, image FROM authors WHERE aid = '" + str(aid) + "'")
+    if (cur.rowcount == 0):
+        print("Error: Multiple descriptions for an author")
+        cur.close()
+        return "-1"
+    temp = cur.fetchone()
+    name = temp[0]
+    description = temp[1]
+    image = temp[2]
+
+    #set to default image place holder
+    if image is None:
+        image = "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/clans/9948323/85cb81325da4164e4dcec8e3e3a0389df026d7c4.png"
+    
+    
+    #assume true = ascending
+    sort_quotes_by = ""
+    if sortby:
+        sort_quotes_by = "ASC"
+    else:
+        sort_quotes_by = "DESC"
+
+    if categories == "None":
+        cur.execute("SELECT quote, qid FROM quotes WHERE author = '" 
+                    + name + "' ORDER BY quote " + sort_quotes_by + ";")
+    else:
+        cur.execute("SELECT quote, qid FROM quotes WHERE author = '" 
+                    + name + "' and '" 
+                    + categories + "'= ANY(tags) ORDER BY quote " 
+                    + sort_quotes_by + ";")
+    quotes = cur.fetchall()
+
+    # properly transform quote data
+    requested_quotes = []
+    for quote in quotes:
+        requested_quotes.append({
+            "content": quote[0],
+            "id": quote[1]
+        })
+
+    requested_quotes = quotes[startIndex : (startIndex + int(num_of_quotes))]
+
+    # if len(quotes) != num_of_quotes:
+    #     print("Error: Number of quotes in database do not match number requested")
+    #     cur.close()
+    #     return "-1"
+
+    requested_items = {
+        "author": name,
+        "description" : description,
+        "quotes" : requested_quotes,
+        "url": image
+    }
+    
+    print(requested_items)
+
+    cur.close()
+    return requested_items
+
 
 def get_map_info(requested_country):
     conn = psycopg2.connect(CONNECT_STRING)
@@ -215,6 +279,7 @@ def get_map_info(requested_country):
     #print("Authors and Coordinates retrieved")
     conn.close()
     return result
+
 
 def search_query(queryString, queryType):
     conn = psycopg2.connect(CONNECT_STRING)
@@ -275,6 +340,7 @@ def search_query(queryString, queryType):
         
         conn.close()
         return dictionary_for_jon
+
 
 if __name__ == '__main__':
     connect()
