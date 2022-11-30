@@ -176,7 +176,7 @@ export default function App() {
 
   const GetQuote = (id, setQuote) => {
     axios.get(`${backendUrl}/quote/${id}`).then((response) => {
-      setQuote({author: response.data.author, content: response.data.quote})
+      setQuote({aid: response.data.aid, author_name: response.data.author_name, quote_content: response.data.quote_content})
     })
   }
 
@@ -189,7 +189,7 @@ export default function App() {
         <Route path='/signup' element={<SignupForm SignUp={SignUp} />}></Route>
         <Route path='*' element={<ErrorPage />}></Route>
         <Route path='/create' element={<QuoteCreation Logout={Logout} CreateQuote={CreateQuote}/>}></Route>
-        <Route path="/quotes/:id" element={<Quote Logout={Logout} GetQuote={GetQuote}/>}></Route>
+        <Route path="/quote/:id" element={<Quote Logout={Logout} GetQuote={GetQuote}/>}></Route>
         <Route path='/map' element={<QuoteMap Logout={Logout} fetchAuthors={fetchAuthors}/>}></Route>
         <Route path='/author/:id' element={<Author Logout={Logout}></Author>}></Route>
         <Route path='/search' element={<Search Logout={Logout} />}></Route>
