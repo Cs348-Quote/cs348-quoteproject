@@ -17,16 +17,18 @@ function Search({Logout}) {
   const [input, setInput] = useState('')
   
   // incoming search from navbar
-  useEffect(() => setCurrQuery(query), [])
+  useEffect(() => {
+    setCurrQuery(query)
+  }, [])
 
   // do a search query from navbar search
   const handleSearch = async () => {
-    console.log(currQuery, searchType)
     setLastSearchType(searchType)
     if (input !== '') setCurrQuery(input)
+    const queryInput = (input !== '') ? input : currQuery
     try {
       const res = await axios.post(`${backendUrl}/search`, {
-        query: currQuery,
+        query: queryInput,
         queryType: searchType,
       }).then(function (response) {
         // api return -1 for failure
@@ -76,14 +78,12 @@ function Search({Logout}) {
   }
 
   const authorLinkStyle = {
-    margin: "1rem",
     textDecoration: "none",
     color: 'white',
     width: '30%'
   }
 
   const quoteLinkStyle = {
-    margin: "1rem",
     textDecoration: "none",
     color: 'white',
     width: '70%'
@@ -103,7 +103,7 @@ function Search({Logout}) {
         return results.map(
           (result) => 
             <div class='resultAuthor'> <Link style={authorLinkStyle}
-              to={`/author/${result.authorId}`}>{result.authorName}</Link> </div>
+              to={`/author/${result[0]}`}>{result[1]}</Link> </div>
         )
       } else {
         // results: [{quoteContent:..., quoteId: ..., authorName:..., authorId...}]

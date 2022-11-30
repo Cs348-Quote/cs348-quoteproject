@@ -22,6 +22,31 @@ function NavBar({ Logout }) {
   const Authorized = (localStorage.getItem('user')) ? true : false
   const loginOrLogout = Authorized ? logoutButton : loginButton 
 
+  const url = window.location.href
+  const urlArray = url.split('/')
+
+  const styleLink = {
+    margin: "auto"
+  }
+
+  if (urlArray[urlArray.length - 1] === 'search') {
+    return (
+      <div className='topnav'>
+        <div className='left'>
+          <Link to='/map' > Quote Map </Link>
+          <Link to='/'>Quote Timeline</Link>
+          
+        </div>
+        <div className='center'><Link to='/'><h2>Quote Explorer</h2></Link></div>
+        <div className='right'>
+        <Link style={styleLink} to='/create'>Create a Quote</Link>
+          {loginOrLogout}
+        </div>
+        
+      </div>
+    )
+  }
+
     return (
       <div className='topnav'>
         <div className='left'>

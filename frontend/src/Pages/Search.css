@@ -28,6 +28,7 @@ button {
   margin: 20px;
   background-color: rgb(77, 77, 77);
   width: 30%;
+  padding: 14px 16px;
 }
 
 
@@ -71,6 +72,8 @@ p {
 }
 
 .resultAuthor a {
+  margin: auto;
+  padding: 14px 14px;
   background-color: rgb(50, 89, 103);
 }
 
@@ -83,4 +86,6 @@ p {
 
 .resultQuote a {
   background-color: rgb(50, 89, 103);
+  margin: 10px;
+  padding: 14px 14px;
 }

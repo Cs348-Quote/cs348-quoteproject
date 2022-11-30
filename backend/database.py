@@ -234,6 +234,7 @@ def search_query(queryString, queryType):
             cur.execute(sql_statement, data)
             final_list += cur.fetchall()
             
+        print(final_list)
         conn.close()
         return final_list
 
