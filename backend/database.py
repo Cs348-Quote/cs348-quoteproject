@@ -77,7 +77,11 @@ def create_user(name, email, password):
         return "0"
     
     #inserts into authors
-    cur.execute("INSERT INTO authors VALUES ('" + name + "', NULL" + ", NULL" + ", NULL" + ", NULL" + ")")
+    #get max aid
+    cur.execute("SELECT MAX(aid) FROM authors")
+    temp = cur.fetchone()
+    max_aid = temp[0] + 1
+    cur.execute("INSERT INTO authors VALUES ('" + str(max_aid) + "', '" + name + "', NULL" + ", NULL" + ", NULL" + ", NULL" + ", NULL" + ", NULL" + ", NULL" + ", NULL" + ")")
 
     #inserts into user_info
     # may need to change in case of SQL injection attack
