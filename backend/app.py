@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from database import check_login, create_user, random_quote, add_quote, get_map_info
+from database import check_login, create_user, random_quote, add_quote, get_map_info, search_query
 
 app = Flask(__name__)
 CORS(app)
@@ -45,13 +45,9 @@ def create_new_quote():
 def search():
     input_json = request.get_json(force=True)
     print(input_json)
-    
-    # return [{"authorName": "Samuel Pei", "authorId": 2}, 
-    #         {"authorName": "Chun Pei", "authorId": 3}]
-    
-    return [{"quoteContent": "Baby Pig Eats dinosaurs because sam is mad", "quoteId": 2, "authorName": "Samwell", "authorId": 3},
-            {"quoteContent": "Baby Dragon", "quoteId": 5, "authorName": "Chun", "authorId": 2}]
-    return "hi"
+    search_info = {'query':input_json['query'],
+                'queryType':input_json['queryType']}
+    return search_query(search_info["query"], search_info["queryType"])
 
 @app.route('/countries', methods = ["GET"])
 def send_map_info():
