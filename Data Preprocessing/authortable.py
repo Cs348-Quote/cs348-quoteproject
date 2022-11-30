@@ -5,6 +5,8 @@
 
 import json
 import os
+import datetime
+import time
 
 def createsql(inputpath,outputpath):
     # Opening JSON file
@@ -49,7 +51,15 @@ def createsql(inputpath,outputpath):
             insertloca = "'"+insertloca.replace("'","\"") + "'"
         else:
             insertloca = "NULL"
-        ligma = "("+ str(count) + ",'"+i["name"].replace("'","\"")+ "'," + insertloca + "," + countrybirth + ",'" + newlist + "'," + img + ","+ descr + "," + insertcoord +")"
+        birthday = i["birthdate"]
+        if birthday != None and "http" not in birthday:
+            if "-" == birthday[0]:
+                birthday = "'"+birthday[1:11]+" BC'"
+            else:
+                birthday = "'"+birthday[0:10]+"'"
+        else:
+            birthday = "NULL"
+        ligma = "("+ str(count) + ",'"+i["name"].replace("'","\"")+ "'," + insertloca + "," + countrybirth + ",'" + newlist + "'," + img + ","+ descr + "," + insertcoord + ","+ birthday +")"
         print(ligma)
         f.write(ligma)
         if count+1 != len(data):
@@ -61,6 +71,6 @@ def createsql(inputpath,outputpath):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    createsql("C:/Users/chun/Desktop/Repo/cs348-quoteproject/backend/table-queries/production/authors.json","D:/Downloads/archive (2)/authorstable.sql")
+    createsql("C:/Users/chun/Desktop/Repo/cs348-quoteproject/backend/table-queries/production/authors (1).json","D:/Downloads/archive (2)/authorstable.sql")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

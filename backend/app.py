@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from database import check_login, create_user, random_quote, add_quote, author_info, get_map_info
+
+from database import check_login, create_user, random_quote, add_quote, get_map_info, search_query, author_info
 
 
 app = Flask(__name__)
@@ -42,6 +43,7 @@ def create_new_quote():
     return add_quote(quote_info["email"], quote_info["quote"], quote_info["category"])
 
 
+
 @app.route('/author', methods = ["POST"])
 def get_author_info():
     input_json = request.get_json(force=True)
@@ -53,6 +55,15 @@ def get_author_info():
           'categories':input_json['categories']}
     return author_info(info["authorId"], info["sortPopAsc"], info["startingIndex"], info["nbQuotes"], info["categories"])
 
+@app.route('/search', methods = ["POST"])
+def search():
+    input_json = request.get_json(force=True)
+    print(input_json)
+    search_info = {'query':input_json['query'],
+                'queryType':input_json['queryType']}
+    return search_query(search_info["query"], search_info["queryType"])
+
+
 @app.route('/countries', methods = ["GET"])
 def send_map_info():
     print("BACKEND STARTING")
@@ -60,4 +71,7 @@ def send_map_info():
     #map_input = {'country':input_json['country']}
     map_input = request.args.get('country')
     print(map_input)
+
+    return get_map_info(map_input)
+
 

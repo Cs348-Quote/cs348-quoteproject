@@ -81,10 +81,10 @@ function QuoteMap({Logout, fetchAuthors}) {
 
       <div className='SelectionDiv'>
         <CountryDropdown value={country} onChange={(val) => {setCountry(val)}} />
-        <button onClick={handleDisplayClick}>
+        <button className='mapButton' onClick={handleDisplayClick}>
           Display Authors!
         </button>
-        <button onClick={handleClear}>
+        <button className='mapButton' onClick={handleClear}>
           Clear
         </button>
       </div>

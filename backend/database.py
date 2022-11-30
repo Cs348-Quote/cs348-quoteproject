@@ -77,7 +77,11 @@ def create_user(name, email, password):
         return "0"
     
     #inserts into authors
-    cur.execute("INSERT INTO authors VALUES ('" + name + "', NULL" + ", NULL" + ", NULL" + ", NULL" + ")")
+    #get max aid
+    cur.execute("SELECT MAX(aid) FROM authors")
+    temp = cur.fetchone()
+    max_aid = temp[0] + 1
+    cur.execute("INSERT INTO authors VALUES ('" + str(max_aid) + "', '" + name + "', NULL" + ", NULL" + ", NULL" + ", NULL" + ", NULL" + ", NULL" + ", NULL" + ", NULL" + ")")
 
     #inserts into user_info
     # may need to change in case of SQL injection attack
@@ -275,6 +279,67 @@ def get_map_info(requested_country):
     #print("Authors and Coordinates retrieved")
     conn.close()
     return result
+
+
+def search_query(queryString, queryType):
+    conn = psycopg2.connect(CONNECT_STRING)
+    cur = conn.cursor()
+
+    if queryType == 'Authors':
+        cur.execute("SELECT DISTINCT name FROM authors")
+        list_of_authors = cur.fetchall()
+
+        sql_statement = "SELECT aid, name FROM authors where name = (%s);"
+        list_of_similar_authors = []
+        final_list = []
+        for x in list_of_authors:
+            temp = fuzz.partial_ratio(queryString, x)
+            if temp > 80:
+                list_of_similar_authors.append(x)
+
+        #haven't read this
+        for x in list_of_similar_authors:
+            data = (x,)
+            cur.execute(sql_statement, data)
+            final_list += cur.fetchall()
+            
+        print(final_list)
+        conn.close()
+        return final_list
+
+    elif queryType == 'Quotes':
+        cur.execute("SELECT qid, quote FROM quotes WHERE quote LIKE '" + queryString + "%' OR quote LIKE '%" + queryString + "%';")
+        list_of_similar_quotes= cur.fetchall()
+        print(list_of_similar_quotes)
+
+        cur.execute("SELECT author FROM quotes WHERE quote LIKE '" + queryString + "%' OR quote LIKE '%" + queryString + "%';")
+        list_of_author_names = cur.fetchall()
+        print(list_of_author_names)
+        
+        sql_statement = "SELECT aid, name FROM authors where name = (%s);"
+
+        final_list = []
+        list_of_author_id_and_names = []
+        for x in list_of_author_names:
+            data = (x,)
+            cur.execute(sql_statement, data)
+            list_of_author_id_and_names += cur.fetchall()
+
+        for i in range(0, len(list_of_author_names)):
+            list_of_similar_quotes[i] += list_of_author_id_and_names[i]
+            final_list.append(list_of_similar_quotes[i])
+
+        dictionary_for_jon = []
+        for i in range(0, len(list_of_author_names)):
+            temp = {}
+            temp['quoteContent'] = final_list[i][1]
+            temp['quoteId'] = final_list[i][0]
+            temp['authorName'] = final_list[i][3]
+            temp['authorId'] = final_list[i][2]
+            dictionary_for_jon.append(temp)
+        
+        conn.close()
+        return dictionary_for_jon
 
 
 if __name__ == '__main__':
