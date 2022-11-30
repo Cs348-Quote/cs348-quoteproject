@@ -1,0 +1,91 @@
+.searchWrapper {
+  background-color:#282c34;
+  height: 985px;
+}
+
+.navBarWrapper {
+  background-color: #333;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.searchBody {
+  background-color: #282c34;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.toggleWrapper {
+  margin:auto;
+  width: 390px;
+  display: flex;
+}
+
+button {
+  margin: 20px;
+  background-color: rgb(77, 77, 77);
+  width: 30%;
+  padding: 14px 16px;
+}
+
+
+.mainInput {
+  width: 50%;
+  margin: 15px;
+  font-size: 20px;
+  height: auto;
+}
+
+h1 {
+  margin: 10px;
+}
+
+h2 {
+  margin: 10px;
+}
+
+.searchDiv {
+  display: flex;
+  margin: auto;
+  width: 700px;
+}
+
+
+p {
+  color: white;
+  margin: 20px;
+}
+
+.resultsDiv {
+  margin: auto;
+  width: 500px;
+}
+
+
+.resultAuthor {
+  width: 100%;
+  height: 20%;
+  margin: 10px;
+}
+
+.resultAuthor a {
+  margin: auto;
+  padding: 14px 14px;
+  background-color: rgb(50, 89, 103);
+}
+
+.resultQuote {
+  display: flex;
+  width: 100%;
+  height: auto;
+  margin: 0px;
+}
+
+.resultQuote a {
+  background-color: rgb(50, 89, 103);
+  margin: 10px;
+  padding: 14px 14px;
+}

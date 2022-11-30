@@ -9,6 +9,7 @@ import axios from 'axios'
 import QuoteCreation from './Pages/QuoteCreation'
 import Quote from './Pages/Quote'
 import QuoteMap from './Pages/QuoteMap'
+import Search from './Pages/Search'
 
 
 export default function App() {
@@ -185,6 +186,7 @@ export default function App() {
         <Route path='/create' element={<QuoteCreation Logout={Logout} CreateQuote={CreateQuote}/>}></Route>
         <Route path="/quotes/:id" element={<Quote Logout={Logout} GetQuote={GetQuote}/>}></Route>
         <Route path='/map' element={<QuoteMap Logout={Logout} fetchAuthors={fetchAuthors}/>}></Route>
+        <Route path='/search' element={<Search Logout={Logout} />}></Route>
       </Routes>
     </Router>
   )

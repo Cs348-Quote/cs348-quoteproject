@@ -27,13 +27,13 @@ function LoginForm({Login, error}) {
     <body>
       <form onSubmit={handleLogin}>
         <div className = 'form-body'>
-          <h2> Login </h2>
+          <h1> Login </h1>
         {(error !== '') ? ( <div className='error'> {error} </div> ) : '' }
         
         {loginInfo}
       
         <div className='buttons'>
-        <button type='submit'>Next</button>
+        <button className='nextButton' type='submit'>Next</button>
           <Link to='/signup'> Create an account </Link>
         </div>
           
