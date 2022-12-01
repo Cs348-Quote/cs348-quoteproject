@@ -357,9 +357,9 @@ def search_timeline(startYear, startBC, endYear, endBC):
     cur = conn.cursor()
 
     for i in range(0, 4):
-        if len(startYear) != 4:
+        if len(str(startYear)) != 4:
             startYear = "0" + startYear
-        if len(endYear) != 4:
+        if len(str(endYear)) != 4:
             endYear = "0" + endYear
 
     startDate = str(startYear) + "-01-01"
