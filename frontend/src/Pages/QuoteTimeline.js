@@ -19,7 +19,7 @@ function QuoteTimeline({Logout}) {
   
     const CreateQuote = (request) => {
       console.log(request)
-        axios.post(`${backendUrl}/create`, {
+        axios.post(`${backendUrl}/timeline`, {
           startYear: request.startYear,
           startYearBC:request.startYearBC,
           endYear: request.endYear,
