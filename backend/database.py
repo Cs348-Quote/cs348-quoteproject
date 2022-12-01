@@ -387,8 +387,8 @@ def search_timeline(startYear, startBC, endYear, endBC):
         temp = {}
         temp["aid"] = x[0]
         temp["author_name"] = x[1]
-        temp["author_description"] = x[2]
-        temp["image"] = x[3]
+        temp["image"] = x[2]
+        temp["author_description"] = x[3]
         temp["birth_date"] = x[4]
 
         if temp["image"] is None:
