@@ -17,17 +17,17 @@ function QuoteTimeline({Logout}) {
       endYearBC: false
     })
   
-    const CreateQuote = (request) => {
+    const CreateQuote = async (request) => {
       console.log(request)
-        axios.post(`${backendUrl}/timeline`, {
+        const res = await axios.post(`${backendUrl}/timeline`, {
           startYear: request.startYear,
           startYearBC:request.startYearBC,
           endYear: request.endYear,
           endYearBC: request.endYearBC
         }).then(function (response) {
-          if (response.data === 1) {
+          if (response.data !== -1) {
             console.log(`Retrieved authors from the year ${request.startYear} up to the year ${request.endYear}`)
-            setItems(response.data.authors.map((author) => createTimelineItem(author)))
+            return response
           } else {
             console.log(`Failed to retrieve authors from the year ${request.startYear} up to the year ${request.endYear}`)
            
@@ -37,22 +37,26 @@ function QuoteTimeline({Logout}) {
           console.log(`Failed to retrieve authors from the year ${request.startYear} up to the year ${request.endYear}`)
           
         })
+        console.log(res.data[1])
+        setItems(res.data.map((author) => createTimelineItem(author)))        
       }
 
       useEffect(() => {
         CreateQuote(request)
       }, [])
+
     const createTimelineItem = ((authorInfo) => {
-        return {title: authorInfo.year, 
-        cardTitle: <Link to={`/author/${authorInfo.id}`}>authorInfo.name</Link>,
+        return {
+        title: authorInfo.birth_date, 
+        cardTitle: <Link to={`/author/${authorInfo.aid}`}>authorInfo.name</Link>,
         media: {
-            name: authorInfo.name ,  
+            name: authorInfo.author_name ,  
             source: {
-                url: authorInfo.url
+                url: authorInfo.image
             },
             type: "IMAGE"
         },
-        cardSubtitle: authorInfo.description}
+        cardSubtitle: authorInfo.author_description}
     })
 
     const [items, setItems] = useState([{
@@ -72,8 +76,14 @@ function QuoteTimeline({Logout}) {
     return (
         <div>
             <NavBar Logout={Logout}></NavBar>
-            <form onSubmit={handleSubmit(setRequest)}> <label>Search in between Year:<input {...register("startYear")} input="number" /> BC? <input {...register("startYearBC")}type="checkbox"/> and Year: 
-            <input {...register("endYear")} input="number"/>BC?<input {...register("endYearBC")}type="checkbox"/></label><input type="submit" value="Submit"/></form>
+            <form onSubmit={handleSubmit(CreateQuote)}> 
+              <label>Search in between Year:
+                <input {...register("startYear")} input="number" /> BC? 
+                <input {...register("startYearBC")}type="checkbox"/> and Year: 
+              <input {...register("endYear")} input="number"/>BC?
+              <input {...register("endYearBC")}type="checkbox"/>
+              </label><input type="submit" value="Submit"></input>
+            </form>
             <div style={{ width: '500px', height: '950px' }}>
                 <Chrono items={items}/>
             </div>
