@@ -1,0 +1,10 @@
+.timelineDiv {
+  width: 100%;
+  height: 950px;
+  margin:auto;
+  background-color: grey;
+}
+
+p {
+  color: blue
+}

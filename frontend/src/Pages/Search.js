@@ -94,9 +94,9 @@ function Search({Logout}) {
     // console.log(results)
     if (results.length === 0) {
       if (lastSearchType === 'Quotes') {
-        return <p>Sorry there doesn't seem to be any quotes that fit the criteria...</p>
+        return <p className='searchP'>Sorry there doesn't seem to be any quotes that fit the criteria...</p>
       } else {
-        return <p>Sorry there doesn't seem to be any authors that fit the criteria...</p>
+        return <p className='searchP'>Sorry there doesn't seem to be any authors that fit the criteria...</p>
       }
     } else {
       if (lastSearchType === 'Authors') {

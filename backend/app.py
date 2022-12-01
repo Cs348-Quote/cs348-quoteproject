@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from database import check_login, create_user, random_quote, add_quote, get_map_info, search_query, author_info, get_quote_info
+
+from database import check_login, create_user, random_quote, add_quote, get_map_info, search_query, author_info, search_timeline, get_quote_info
 
 
 app = Flask(__name__)
@@ -73,9 +74,21 @@ def send_map_info():
 
     return get_map_info(map_input)
 
+
+@app.route('/timeline', methods = ["POST"])
+def timeline_info():
+    input_json = request.get_json(force=True)
+    timeline_data = {'startYear':input_json['startYear'],
+                    'startYearBC':input_json['startYearBC'],
+                    'endYear':input_json['endYear'],
+                    'endYearBC':input_json['endYearBC']}
+    return search_timeline(timeline_data["startYear"], timeline_data["startYearBC"], timeline_data["endYear"], timeline_data["endYearBC"])
+
+
 @app.route('/quote', methods = ["GET"])
 def send_quote_info():
     quote_input = request.args.get('quote')
     print("QUOTE INPUT: ")
     print(quote_input)
     return get_quote_info(quote_input)
+
