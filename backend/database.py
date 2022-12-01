@@ -15,6 +15,9 @@ CONNECT_STRING = f"dbname={DB_NAME} user={DB_USER} password={DB_PASS}"
 # DEBUG
 # print(CONNECT_STRING)
 
+def set_default_image():
+    return "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/clans/9948323/85cb81325da4164e4dcec8e3e3a0389df026d7c4.png"
+
 def connect():
     """Connect to the PostgreSQL database server"""
     conn = None
@@ -176,7 +179,7 @@ def author_info(aid, sortby, startIndex, num_of_quotes, categories):
 
     #set to default image place holder
     if image is None:
-        image = "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/clans/9948323/85cb81325da4164e4dcec8e3e3a0389df026d7c4.png"
+        image = set_default_image()
     
     
     #assume true = ascending
@@ -341,6 +344,40 @@ def search_query(queryString, queryType):
         conn.close()
         return dictionary_for_jon
 
+def search_timeline(startYear, startBC, endYear, endBC):
+    conn = psycopg2.connect(CONNECT_STRING)
+    cur = conn.cursor()
+    startDate = str(startYear) + "-01-01"
+    endDate = str(endYear) + "-12-31"
+
+    if startBC:
+        #startDate = "-" + startDate
+        startDate += " BC"
+    if endBC:
+        #endDate += "-" + endDate
+        endDate += " BC"
+
+    sql = "SELECT aid, name, image, description, birthdate FROM authors WHERE birthdate BETWEEN (%s) AND (%s) ORDER BY RANDOM() LIMIT 20"
+    data = (startDate, endDate)
+    cur.execute(sql, data)
+    list_of_tuples = cur.fetchall()
+    
+    list_of_dictionaries_for_brandon = []
+    for x in list_of_tuples:
+        temp = {}
+        temp["aid"] = x[0]
+        temp["author_name"] = x[1]
+        temp["author_description"] = x[2]
+        temp["image"] = x[3]
+        temp["birth_date"] = x[4]
+
+        if temp["image"] is None:
+            temp["image"] = set_default_image()
+
+        list_of_dictionaries_for_brandon.append(temp)
+    
+    conn.close()
+    return list_of_dictionaries_for_brandon
 
 if __name__ == '__main__':
     connect()
