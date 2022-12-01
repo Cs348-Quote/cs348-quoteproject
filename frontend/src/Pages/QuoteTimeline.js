@@ -4,27 +4,40 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { backendUrl } from "../App";
+import { useEffect } from "react";
 
 function QuoteTimeline({Logout}) {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    /*const CreateQuote = date => {
+
+    const [request, setRequest] = useState({
+      startYear: 2000,
+      endYear: 2020
+    })
+  
+    const CreateQuote = (request) => {
+      console.log(request)
         axios.post(`${backendUrl}/create`, {
-          startYear: date.startYear,
-          endYear: date.endYear
+          startYear: request.startYear,
+          endYear: request.endYear
         }).then(function (response) {
           if (response.data === 1) {
-            console.log(`Retrieved authors from the year ${startYear} up to the year ${endYear}`)
+            console.log(`Retrieved authors from the year ${request.startYear} up to the year ${request.endYear}`)
             setItems(response.data.authors.map((author) => createTimelineItem(author)))
           } else {
-            console.log(`Failed to retrieve authors from the year ${startYear} up to the year ${endYear}`)
-            setError(`Failed to retrieve authors from the year ${startYear} up to the year ${endYear}`)
+            console.log(`Failed to retrieve authors from the year ${request.startYear} up to the year ${request.endYear}`)
+           
           }
         }).catch(function (error) {
           console.log(error)
-          console.log(`Failed to retrieve authors from the year ${startYear} up to the year ${endYear}`)
-          setError(`Failed to retrieve authors from the year ${startYear} up to the year ${endYear}`)
+          console.log(`Failed to retrieve authors from the year ${request.startYear} up to the year ${request.endYear}`)
+          
         })
-      }*/
+      }
+
+      useEffect(() => {
+        CreateQuote(request)
+      }, [])
     const createTimelineItem = ((authorInfo) => {
         return {title: authorInfo.year, 
         cardTitle: <Link to={`/author/${authorInfo.id}`}>authorInfo.name</Link>,
@@ -55,7 +68,7 @@ function QuoteTimeline({Logout}) {
     return (
         <div>
             <NavBar Logout={Logout}></NavBar>
-            <form > <label>Search in between Year:<input {...register("startYear")} input="number" /> and Year: 
+            <form onSubmit={handleSubmit(setRequest)}> <label>Search in between Year:<input {...register("startYear")} input="number" /> and Year: 
             <input {...register("endYear")} input="number"/></label><input type="submit" value="Submit"/></form>
             <div style={{ width: '500px', height: '950px' }}>
                 <Chrono items={items}/>
