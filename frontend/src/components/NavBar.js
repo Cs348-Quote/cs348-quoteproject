@@ -26,7 +26,8 @@ function NavBar({ Logout }) {
   const urlArray = url.split('/')
 
   const styleLink = {
-    margin: "auto"
+    margin: "auto",
+    color: "white"
   }
 
   if (urlArray[urlArray.length - 1] === 'search') {

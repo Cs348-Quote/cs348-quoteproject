@@ -1,0 +1,10 @@
+.quoteWrapper {
+  background-color: #282c34;
+  height: 969px;
+}
+
+.quoteContent {
+  margin: auto;
+  padding: 20px 20px;
+  text-align: center;
+}

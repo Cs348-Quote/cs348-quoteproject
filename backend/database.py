@@ -236,7 +236,7 @@ def get_map_info(requested_country):
     list_of_countries_in_DB = ["Afghanistan", "Algeria", "Ancient Rome", "Argentina", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Barbados", "Belarus", "Belgium", "Bosnia and Herzegovina", "Brazil", "British Empire", "Bulgaria", "Canada", "Chile", "Classical Athens", "Colombia", "concessions in China", "Croatia", "Cuba", "Czech Republic", "Denmark", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "Ethiopia", "Finland", "France", "Free City of Danzig", "Georgia", "German Reich", "Germany", "Ghana", "Greece", "Guatemala", "Guyana", "Haiti", "Hungary", "India", "Indonesia", "Iran", "Iraq", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kingdom of Denmark", "Kingdom of England", "Kosovo", "Kuwait", "Latin Empire", "Latvia", "Lebanon", "Liberia", "Lithuania", "Luxembourg", "Malawi", "Malta", "Mandatory Palestine", "Mauritius", "Mexico", "Mongolia", "Morocco", "Mozambique", "Mughal Empire", "Myanmar", "Nepal", "Netherlands", "New Zealand", "Nigeria", "North Korea", "North Macedonia", "Norway", "Pakistan", "People\"s Republic of China", "Peru", "Philippines", "Poland", "Portugal", "Principality of Bitlis", "Principality of Bulgaria", "Province of Massachusetts Bay", "Prussia", "Puerto Rico", "Republic of China", "Republic of Ireland", "Republic of Vietnam", "Romania", "Russia", "Rwanda", "Saint Lucia", "Serbia", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "Song", "South Africa", "South Korea", "Soviet Union", "Spain", "Sri Lanka", "State of Palestine", "Sweden", "Switzerland", "Syria", "Taiwan", "Tanzania", "Thailand", "The Bahamas", "Trinidad and Tobago", "Tunisia", "Turkey", "Ukraine", "Union of South Africa", "United Arab Emirates", "United Kingdom", "United Kingdom of Great Britain and Ireland", "United States of America", "Uruguay", "Venezuela", "Vietnam", "Yemen", "Zhou dynasty", "Zimbabwe", "Zimbabwe Rhodesia", "فلسطين"]
 
     #retrieve authors with country "requested_country"
-    sql_statement = "SELECT name, coordx, coordy, aid FROM authors WHERE country IN (%s);"
+    sql_statement = "SELECT name, coordx, coordy, aid FROM authors WHERE country IN (%s) ORDER BY RANDOM() LIMIT 5;"
     # print("REQUESTED COUNTRY: ")
     # print(requested_country)
     best = -1
@@ -344,6 +344,7 @@ def search_query(queryString, queryType):
         conn.close()
         return dictionary_for_jon
 
+
 def search_timeline(startYear, startBC, endYear, endBC):
     DATE2STR = psycopg2.extensions.new_type(
     psycopg2.extensions.DATE.values,
@@ -400,6 +401,37 @@ def search_timeline(startYear, startBC, endYear, endBC):
 
     conn.close()
     return list_of_dictionaries_for_brandon
+
+
+def get_quote_info(quote):
+    conn = psycopg2.connect(CONNECT_STRING)
+    cur = conn.cursor()
+
+    sql = "SELECT aid, name, quote FROM authors INNER JOIN quotes ON quotes.author = authors.name WHERE qid = (%s);"
+    data = (quote, )
+    cur.execute(sql, data)
+
+    tuple_of_data = cur.fetchone()
+    if len(cur.fetchall()) > 1:
+        print("ERROR: Quote ID is not unique")
+        return "-1"
+    
+    print(tuple_of_data)
+
+    aid = tuple_of_data[0]
+    author_name = tuple_of_data[1]
+    quote_content = tuple_of_data[2]
+
+    dictionary_for_brandon = {}
+    dictionary_for_brandon['aid'] = aid
+    dictionary_for_brandon['author_name'] = author_name
+    dictionary_for_brandon['quote_content'] = quote_content
+
+    conn.close()
+    print("DICTIONARY FOR BRANDON: ")
+    print(dictionary_for_brandon)
+    return dictionary_for_brandon
+
 
 if __name__ == '__main__':
     connect()
