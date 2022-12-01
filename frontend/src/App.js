@@ -4,7 +4,7 @@ import LoginForm from './Pages/LoginForm'
 import SignupForm from './Pages/SignupForm'
 import ErrorPage from './Pages/ErrorPage'
 import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import QuoteCreation from './Pages/QuoteCreation'
 import Quote from './Pages/Quote'
@@ -16,12 +16,12 @@ import Search from './Pages/Search'
 
 
 export const backendUrl = 'http://localhost:5000'
+
 export default function App() {
 
   // just for easier testing - remove later
   const adminUser = { email: 'test@test.com', password: 'test'}
 
-  
   const [user, setUser] = useState({name: '', email: ''})
   const [error, setError] = useState('')
   
@@ -128,32 +128,6 @@ export default function App() {
     })
   }
 
-  const CreateQuote = quoteDetails => {
-    axios.post(`${backendUrl}/create`, {
-      email: user.email,
-      quote: quoteDetails.quote,
-      category: quoteDetails.category
-    }).then(function (response) {
-      if (response.data === 1) {
-        // Successful Quote Creation
-        console.log(`User ${quoteDetails.username} created a quote`)
-        // Redirect to Quote. 
-        // Needs the response to contain the id of the created quote
-        // Intented to redirect to /quotes/${quoteID}
-        const id = response.data.id
-        // TODO: @blacheo did we want to redirect to the quote page here?
-      } else {
-        console.log(`Quote Creation Failed`)
-        setError(`Failed to Create Quote`)
-      }
-    }).catch(function (error) {
-      console.log(error)
-      console.log(`Quote Creation failed for: ${user.name}`)
-      setError(`Quote Creation Failed: ${error}`)
-    })
-  }
-
-
   // send country name in backend url
   const fetchAuthors = (country, setMarkers) => {
     axios.get(`${backendUrl}/countries`, { 
@@ -175,11 +149,15 @@ export default function App() {
   }
 
   const GetQuote = (id, setQuote) => {
-    axios.get(`${backendUrl}/quote/${id}`).then((response) => {
+    axios.get(`${backendUrl}/quote`, { 
+      params: { quote: id } 
+    }).then((response) => {
       console.log(response)
-      setQuote({aid: response.data.aid, 
+      setQuote({
+        aid: response.data.aid, 
         author_name: response.data.author_name, 
-        quote_content: response.data.quote_content})
+        quote_content: response.data.quote_content
+      })
     })
   }
 
@@ -191,7 +169,7 @@ export default function App() {
         <Route path='/login' element={<LoginForm Login={Login} error={error}/>}></Route>
         <Route path='/signup' element={<SignupForm SignUp={SignUp} />}></Route>
         <Route path='*' element={<ErrorPage />}></Route>
-        <Route path='/create' element={<QuoteCreation Logout={Logout} CreateQuote={CreateQuote}/>}></Route>
+        <Route path='/create' element={<QuoteCreation Logout={Logout} />}></Route>
         <Route path="/quote/:id" element={<Quote Logout={Logout} GetQuote={GetQuote}/>}></Route>
         <Route path='/map' element={<QuoteMap Logout={Logout} fetchAuthors={fetchAuthors}/>}></Route>
         <Route path='/author/:id' element={<Author Logout={Logout}></Author>}></Route>
