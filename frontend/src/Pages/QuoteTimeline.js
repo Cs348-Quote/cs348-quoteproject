@@ -6,6 +6,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { backendUrl } from "../App";
 import { useEffect } from "react";
+import './QuoteTimeline.css'
 
 function QuoteTimeline({Logout}) {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -66,7 +67,9 @@ function QuoteTimeline({Logout}) {
 
 
     const linkStyle = {
-      color: "white"
+      color: "white",
+      margin: "auto",
+      float: "center"
     }
 
     const createTimelineItem = ((authorInfo) => {
@@ -90,7 +93,7 @@ function QuoteTimeline({Logout}) {
 
     return (
         <div>
-            <NavBar Logout={Logout}></NavBar>
+             <div className='navBarWrapper'> <NavBar Logout={Logout} /> </div>
             <form style={{ margin: 'auto' }} onSubmit={handleSubmit(CreateQuote)}> 
               <label>Search in between Year:
                 <input {...register("startYear")} input="number" /> BC? 
@@ -99,7 +102,7 @@ function QuoteTimeline({Logout}) {
               <input {...register("endYearBC")}type="checkbox"/>
               </label><input type="submit" value="Submit"></input>
             </form>
-            <div style={{ width: '500px', height: '950px', margin: 'auto' }}>
+            <div className="timelineDiv">
                 <CustomChrono/>
             </div>
         </div>
