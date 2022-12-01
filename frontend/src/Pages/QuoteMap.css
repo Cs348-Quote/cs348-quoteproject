@@ -48,6 +48,8 @@ h2 {
   align-items: center;
 }
 
-button {
+.mapButton {
   margin: 2px;
+  background-color: rgb(77, 77, 77);
+  width: auto;
 }

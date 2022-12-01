@@ -21,16 +21,14 @@ function SignupForm({SignUp}) {
     <div>
         <form onSubmit={handleSignUp} >
           <div  className = 'form-body'>
-          <h2> Sign Up </h2>
+          <h1> Sign Up </h1>
           {signupEntry}
           <div className='buttons'>
-            <button type='submit'>Next</button>
+            <button className='nextButton' type='submit'>Next</button>
             <Link to='/login'> Already have an account? </Link>
           </div>
           
           </div>
-     
-        
     
         </form>
       

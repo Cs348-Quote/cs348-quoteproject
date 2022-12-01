@@ -11,13 +11,18 @@ import Quote from './Pages/Quote'
 import QuoteMap from './Pages/QuoteMap'
 import QuoteTimeline from './Pages/QuoteTimeline'
 
+import Author from './Pages/Author'
 
+import Search from './Pages/Search'
+
+
+export const backendUrl = 'http://localhost:5000'
 export default function App() {
 
   // just for easier testing - remove later
   const adminUser = { email: 'test@test.com', password: 'test'}
 
-  const backendUrl = 'http://localhost:5000'
+  
   const [user, setUser] = useState({name: '', email: ''})
   const [error, setError] = useState('')
   
@@ -149,6 +154,7 @@ export default function App() {
     })
   }
 
+
   // send country name in backend url
   const fetchAuthors = (country, setMarkers) => {
     axios.get(`${backendUrl}/countries`, { 
@@ -187,6 +193,9 @@ export default function App() {
         <Route path="/quotes/:id" element={<Quote Logout={Logout} GetQuote={GetQuote}/>}></Route>
         <Route path='/map' element={<QuoteMap Logout={Logout} fetchAuthors={fetchAuthors}/>}></Route>
         <Route path='/timeline' element={<QuoteTimeline Logout={Logout}/>}></Route>
+        <Route path='/author/:id' element={<Author Logout={Logout}></Author>}></Route>
+        <Route path='/search' element={<Search Logout={Logout} />}></Route>
+
       </Routes>
     </Router>
   )

@@ -1,11 +1,10 @@
 @import "./common_controls.css";
 
 h2 {
-    color: #ddd;
+    color: white;
     text-align: center;
+    margin: auto;
   }
-
-
 
 .form-group {
     color: #ddd;
@@ -16,16 +15,19 @@ h2 {
     grid-template-rows: 10% 10% 10% 10%;
     gap: 10px;
     font-size: large;
+    width: 100%;
 }
 
 .form-group label {
     padding: 10px;
-    
+    width: 20%;
+    margin:auto;
 }
 
 .form-group input {
     padding: 10px;
-
+    width: 80%;
+    margin:auto;
 }
 
 form .form-body {
@@ -41,5 +43,11 @@ form .form-body {
 body {
     display: table;
     width: 100%;
+}
+
+.nextButton {
+    width: 100%;
+    text-align: center;
+    margin:auto;
 }
 
