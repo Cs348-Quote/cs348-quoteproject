@@ -15,8 +15,13 @@ CONNECT_STRING = f"dbname={DB_NAME} user={DB_USER} password={DB_PASS}"
 # DEBUG
 # print(CONNECT_STRING)
 
-def set_default_image():
-    return "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/clans/9948323/85cb81325da4164e4dcec8e3e3a0389df026d7c4.png"
+def set_default_image(name):
+    if "jon" in name:
+        return "https://s3.amazonaws.com/rms-rmfiles-production/client_photos/athlete_3370086_profile.jpg"
+    elif "chun" in name:
+        return "https://media-exp1.licdn.com/dms/image/C4D03AQGBRl-wEkVYUg/profile-displayphoto-shrink_800_800/0/1602082664795?e=2147483647&v=beta&t=qpt3SQgA7XrQ76Og1PGQIQbc656XkLxZcwE3Mdmz5RI"
+    else:
+        return "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
 
 def connect():
     """Connect to the PostgreSQL database server"""
@@ -179,7 +184,7 @@ def author_info(aid, sortby, startIndex, num_of_quotes, categories):
 
     #set to default image place holder
     if image is None:
-        image = set_default_image()
+        image = set_default_image(name)
     
     
     #assume true = ascending
@@ -393,7 +398,7 @@ def search_timeline(startYear, startBC, endYear, endBC):
         temp["birth_date"] = x[4]
 
         if temp["image"] is None:
-            temp["image"] = set_default_image()
+            temp["image"] = set_default_image(x[1])
 
         list_of_dictionaries_for_brandon.append(temp)
     
