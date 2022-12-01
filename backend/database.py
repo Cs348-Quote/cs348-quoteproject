@@ -345,10 +345,25 @@ def search_query(queryString, queryType):
         return dictionary_for_jon
 
 def search_timeline(startYear, startBC, endYear, endBC):
+    DATE2STR = psycopg2.extensions.new_type(
+    psycopg2.extensions.DATE.values,
+    'DATE2STR',
+    lambda value, curs:
+        str(value) if value is not None else None)
+
+    psycopg2.extensions.register_type(DATE2STR)
+
     conn = psycopg2.connect(CONNECT_STRING)
     cur = conn.cursor()
+
+    for i in range(0, 4):
+        if len(startYear) != 4:
+            startYear = "0" + startYear
+        if len(endYear) != 4:
+            endYear = "0" + endYear
+
     startDate = str(startYear) + "-01-01"
-    endDate = str(endYear) + "-12-31"
+    endDate = str(endYear) + "-12-31" 
 
     if startBC:
         #startDate = "-" + startDate
@@ -356,6 +371,11 @@ def search_timeline(startYear, startBC, endYear, endBC):
     if endBC:
         #endDate += "-" + endDate
         endDate += " BC"
+
+    print("Start Date: ")
+    print(startDate)
+    print("End Date: ")
+    print(endDate)
 
     sql = "SELECT aid, name, image, description, birthdate FROM authors WHERE birthdate BETWEEN (%s) AND (%s) ORDER BY RANDOM() LIMIT 20"
     data = (startDate, endDate)
@@ -376,6 +396,8 @@ def search_timeline(startYear, startBC, endYear, endBC):
 
         list_of_dictionaries_for_brandon.append(temp)
     
+    print(list_of_dictionaries_for_brandon)
+
     conn.close()
     return list_of_dictionaries_for_brandon
 
