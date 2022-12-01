@@ -93,7 +93,9 @@ function Author({Logout}) {
 
   return (
       <div className="author">
-          <NavBar Logout={Logout}></NavBar>
+          <div className='navBarWrapper'>
+            <NavBar Logout={Logout}/>
+          </div>
           <div className="author-info"> 
               <div className="author-text">
                   <h1>{authorInfo.author}</h1>
@@ -102,16 +104,21 @@ function Author({Logout}) {
               
               <img src={authorInfo.url} alt='Author'></img>
           </div>
-          <h2>Quotes</h2>
-          <form onSubmit={handleSubmit(GetAuthorInfo)}>
-          <label>Sort by Popularity: <select name="SortPopAsc" {...register("sortPopAsc")}>{ascDesc}</select></label>
-          <label>Filter by Category: <select name="Category" {...register("categories")}>{showCategories}</select> </label>
-          <label>Number of Quotes per Page: <input type="number" {...register("nbQuotes", {min:1, max:50})} placeholder="10"/></label>
-          <input type="reset" value="Reset"/>
-          <input type="submit" value="Submit"></input>
-          </form>
-          <div className="quotes">
-             <CustomQuote/>
+
+          <div className="quoteContent">
+            <h2 className="quoteHeader">Quotes</h2>
+
+            <form onSubmit={handleSubmit(GetAuthorInfo)}>
+              <label className="specialLabel">Sort by Popularity: <select name="SortPopAsc" {...register("sortPopAsc")}>{ascDesc}</select></label>
+              <label className="specialLabel">Filter by Category: <select name="Category" {...register("categories")}>{showCategories}</select> </label>
+              <label className="specialLabel">Number of Quotes per Page: <input type="number" {...register("nbQuotes", {min:1, max:50})} placeholder="10"/></label>
+              <input type="reset" value="Reset"/>
+              <input type="submit" value="Submit"></input>
+            </form>
+
+            <div className="quotes">
+              <CustomQuote/>
+            </div>
           </div>
           
       </div>

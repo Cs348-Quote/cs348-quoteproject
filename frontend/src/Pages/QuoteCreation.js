@@ -1,22 +1,15 @@
 import { categories } from '../components/categories'
 import NavBar from '../components/NavBar'
-import { FormGroup } from '../components/user_info'
 import { useForm } from 'react-hook-form'
 import './QuoteCreation.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import React, { useState } from 'react'
 
 function QuoteCreation({Logout}) {
     const showCategories = categories.map((category) => 
         <option key={category}>{category}</option>)
     const { register, handleSubmit, watch, formState: { errors } } = useForm()
     const backendUrl = 'http://localhost:5000'
-    const [request, setRequest] = useState({
-        email: '',
-        quote: '',
-        category: '',
-    })
 
     const loggedInUser = JSON.parse(localStorage.getItem('user'))
     const navigate = useNavigate()

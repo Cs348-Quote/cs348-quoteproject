@@ -13,17 +13,17 @@ object-fit: scale-down;
 }
 
 .topnav {
-overflow: hidden;
-background-color: #333;
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-align-items: center;
+  overflow: hidden;
+  background-color: #333;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
 }
   
 .left a {
   float: left;
+  width: 25%;
 }
-
 
 
 .right {
