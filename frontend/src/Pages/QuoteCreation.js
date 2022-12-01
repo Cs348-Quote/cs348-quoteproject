@@ -47,13 +47,15 @@ function QuoteCreation({Logout}) {
       }
 
     return (
-        <div>
+        <div >
             <div className='navBarWrapper'> <NavBar Logout={Logout} /> </div>
-            
+            <div className="quote-creator">
             <h1>Quote Creator</h1>
             <form onSubmit={handleSubmit(CreateQuote)}>
-                <label>Your thought provoking quote:</label>
-                <div><textarea autoFocus={true} {...register('quote')}></textarea></div>
+
+                <h2>Your thought provoking quote:</h2>
+                <div><textarea autoFocus={true} {...register("quote")}></textarea></div>
+
                 <div>
                 <label>What Category does your Quote belong to? <select name='Category' {...register('category')}>{showCategories}</select> </label>
                 </div>
@@ -64,6 +66,8 @@ function QuoteCreation({Logout}) {
                 
                
             </form>
+            </div>
+           
         </div>
     )
 }

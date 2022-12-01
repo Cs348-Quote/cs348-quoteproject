@@ -5,3 +5,40 @@
   justify-content: center;
   display: flex;
 }
+
+.quote-creator h1, label, h2 {
+  color: white;
+  text-align: center;
+}
+
+.quote-creator { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quote-creator form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+html { 
+  background-color: #282c34;
+}
+
+.quote-creator input {
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  border: none;
+  background-color: #333;
+  max-width: 100%;
+  font-size: large;
+}
+
+.quote-creator input:hover {
+  background-color: #ddd;
+  color: black;
+}
