@@ -12,14 +12,18 @@ function QuoteTimeline({Logout}) {
 
     const [request, setRequest] = useState({
       startYear: 2000,
-      endYear: 2020
+      startYearBC: false,
+      endYear: 2020,
+      endYearBC: false
     })
   
     const CreateQuote = (request) => {
       console.log(request)
         axios.post(`${backendUrl}/create`, {
           startYear: request.startYear,
-          endYear: request.endYear
+          startYearBC:request.startYearBC,
+          endYear: request.endYear,
+          endYearBC: request.endYearBC
         }).then(function (response) {
           if (response.data === 1) {
             console.log(`Retrieved authors from the year ${request.startYear} up to the year ${request.endYear}`)
@@ -68,8 +72,8 @@ function QuoteTimeline({Logout}) {
     return (
         <div>
             <NavBar Logout={Logout}></NavBar>
-            <form onSubmit={handleSubmit(setRequest)}> <label>Search in between Year:<input {...register("startYear")} input="number" /> and Year: 
-            <input {...register("endYear")} input="number"/></label><input type="submit" value="Submit"/></form>
+            <form onSubmit={handleSubmit(setRequest)}> <label>Search in between Year:<input {...register("startYear")} input="number" /> BC? <input {...register("startYearBC")}type="checkbox"/> and Year: 
+            <input {...register("endYear")} input="number"/>BC?<input {...register("endYearBC")}type="checkbox"/></label><input type="submit" value="Submit"/></form>
             <div style={{ width: '500px', height: '950px' }}>
                 <Chrono items={items}/>
             </div>
