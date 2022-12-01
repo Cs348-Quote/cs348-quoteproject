@@ -20,4 +20,4 @@ function Quote({GetQuote, Logout}) {
     </div>)
 }
 
-export default  Quote
+export default Quote

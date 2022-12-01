@@ -176,7 +176,10 @@ export default function App() {
 
   const GetQuote = (id, setQuote) => {
     axios.get(`${backendUrl}/quote/${id}`).then((response) => {
-      setQuote({aid: response.data.aid, author_name: response.data.author_name, quote_content: response.data.quote_content})
+      console.log(response)
+      setQuote({aid: response.data.aid, 
+        author_name: response.data.author_name, 
+        quote_content: response.data.quote_content})
     })
   }
 
