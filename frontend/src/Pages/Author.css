@@ -2,12 +2,13 @@
 
 .author-info {
     display: flex;
-    background-color: rgb(112, 197, 198);
+    background-color: rgb(65, 158, 212);
     border-bottom: solid;
     padding: 2%;
     flex-wrap: wrap;
     justify-content: space-around;
-    width: 100%;
+    width: 60%;
+    margin: auto;
 }
 
 .author-text h1 {
@@ -21,8 +22,10 @@
 }
 
 a {
-    color: black;
+    color: white;
     text-decoration: none;
+    width: 100%;
+    text-align: left;
 }
 
 .quote {
@@ -37,3 +40,26 @@ a {
     justify-content: space-around;
     border: solid;
 }
+
+.quoteHeader {
+    background-color: #282c34;
+}
+
+.quoteContent {
+    background-color: #282c34;
+}
+
+.specialLabel {
+    color:white;
+}
+
+.author {
+    background-color: #282c34;
+}
+.navBarWrapper {
+    background-color: #333;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }

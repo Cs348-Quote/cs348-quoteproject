@@ -19,6 +19,7 @@ function Search({Logout}) {
   // incoming search from navbar
   useEffect(() => {
     setCurrQuery(query)
+    handleSearch()
   }, [])
 
   // do a search query from navbar search

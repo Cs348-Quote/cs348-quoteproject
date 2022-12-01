@@ -341,6 +341,35 @@ def search_query(queryString, queryType):
         conn.close()
         return dictionary_for_jon
 
+def get_quote_info(quote):
+    conn = psycopg2.connect(CONNECT_STRING)
+    cur = conn.cursor()
+
+    sql = "SELECT aid, name, quote FROM authors INNER JOIN quotes ON quotes.author = authors.name WHERE qid = (%s);"
+    data = (quote, )
+    cur.execute(sql, data)
+
+    tuple_of_data = cur.fetchone()
+    if len(cur.fetchall()) > 1:
+        print("ERROR: Quote ID is not unique")
+        return "-1"
+    
+    print(tuple_of_data)
+
+    aid = tuple_of_data[0]
+    author_name = tuple_of_data[1]
+    quote_content = tuple_of_data[2]
+
+    dictionary_for_brandon = {}
+    dictionary_for_brandon['aid'] = aid
+    dictionary_for_brandon['author_name'] = author_name
+    dictionary_for_brandon['quote_content'] = quote_content
+
+    conn.close()
+    print("DICTIONARY FOR BRANDON: ")
+    print(dictionary_for_brandon)
+    return dictionary_for_brandon
+
 
 if __name__ == '__main__':
     connect()
