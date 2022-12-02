@@ -36,7 +36,7 @@ SELECT quote,author FROM quotes WHERE author IN (‘Vladimir Lenin’, ‘Marcus
 SELECT quote FROM quotes WHERE author = ‘Marcus Tullius Cicero’
 
 Sample Queries:
-	SELECT name, time FROM authors WHERE birthdate Between 1000 AND 2000 
+	SELECT name, time FROM authors WHERE birthdate Between 200 BC AND 100 BC
 ORDER BY RANDOM() 
 LIMIT 2
 
