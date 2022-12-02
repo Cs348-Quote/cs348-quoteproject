@@ -27,7 +27,7 @@ SELECT name FROM authors WHERE name = C. S. Lewis
 
 INSERT INTO quotes (qid, quote, author, category) VALUES (19, 'Saje Natural Wellness', 'admin', 'Romance')
 
-SELECT name, location, coordx, coordy FROM authors WHERE region = ‘Italy’ 
+SELECT name, location, coordx, coordy FROM authors WHERE country = ‘Italy’ 
 ORDER BY RANDOM() 
 LIMIT 10
 
@@ -36,7 +36,7 @@ SELECT quote,author FROM quotes WHERE author IN (‘Vladimir Lenin’, ‘Marcus
 SELECT quote FROM quotes WHERE author = ‘Marcus Tullius Cicero’
 
 Sample Queries:
-	SELECT name, time FROM authors WHERE time <= 948171485 AND time >= -63522643463
+	SELECT name, time FROM authors WHERE birthdate Between 1000 AND 2000 
 ORDER BY RANDOM() 
 LIMIT 2
 
