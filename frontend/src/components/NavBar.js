@@ -38,7 +38,7 @@ function NavBar({ Logout }) {
           <Link to='/'>Quote Timeline</Link>
           
         </div>
-        <div className='center'><Link to='/'><h2>Quote Explorer</h2></Link></div>
+        <div className='center'><Link to='/'><h2>Quotematic</h2></Link></div>
         <div className='right'>
         <Link style={styleLink} to='/create'>Create a Quote</Link>
           {loginOrLogout}

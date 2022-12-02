@@ -25,6 +25,7 @@ function LoginForm({Login, error}) {
 
   return (
     <body>
+      <h1 className="header">Quotematic</h1>
       <form onSubmit={handleLogin}>
         <div className = 'form-body'>
           <h1> Login </h1>
